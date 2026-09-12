@@ -1,0 +1,617 @@
+<meta charset="utf-8">
+<title>Brighter Path</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#2c2a3c; --panel:#3a3850; --panel2:#33314a; --line:#5b5877; --text:#f4eef6; --muted:#b7b1c9;
+  --pink:#f5b8c8; --pink2:#ffd3de; --gold:#f0c24a; --gold2:#b98a1e; --green:#8fc76a; --red:#e86b6b;
+  --paper:#e9d3a8; --paper2:#c9a66b; --ink:#4a3521; --sky:#4aa3e8;
+  --font:'Pixelify Sans',"Segoe UI",system-ui,sans-serif; --mono:ui-monospace,"Cascadia Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#1d1c29;color:var(--text);font-family:var(--font);font-size:16px;-webkit-font-smoothing:none;overscroll-behavior:none}
+img{image-rendering:pixelated;image-rendering:crisp-edges}
+button{font-family:inherit;color:inherit;cursor:pointer}
+#app{position:relative;max-width:480px;margin:0 auto;height:100dvh;height:100vh;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 0 1px #000, 0 0 40px #0008}
+@media (min-width:520px){#app{height:min(100vh,960px);margin-top:calc((100vh - min(100vh,960px))/2);border-radius:12px}}
+
+/* HUD */
+.hud{display:flex;align-items:center;gap:8px;padding:10px 12px 8px;flex:none}
+.avatar{width:58px;height:58px;border:3px solid var(--line);border-radius:8px;background:#4b4766;overflow:hidden;flex:none;box-shadow:inset 0 0 0 2px #2c2a3c}
+.avatar img{width:100%;height:100%;object-fit:cover;display:block}
+.lvl{flex:1;min-width:0}
+.lvl .lv{font-weight:700;font-size:15px;letter-spacing:.5px}
+.xpbar{height:12px;border:3px solid var(--line);border-radius:6px;background:#221f32;margin:4px 0 3px;overflow:hidden;max-width:180px}
+.xpbar i{display:block;height:100%;background:linear-gradient(90deg,#ffd3de,#f5b8c8);width:0%;transition:width .5s}
+.lvl .xp{font-size:12px;color:var(--muted);letter-spacing:.5px}
+.pill{display:flex;align-items:center;gap:6px;border:3px solid var(--line);border-radius:8px;background:var(--panel);padding:4px 10px;font-weight:700;font-size:16px;min-height:38px;position:relative}
+.pill img{width:20px;height:20px}
+.pill.sq{padding:4px 8px}
+.corner::after{content:"";position:absolute;right:3px;bottom:3px;width:6px;height:6px;border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
+
+/* Nav */
+.nav{display:flex;gap:6px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:#25233a;border-top:3px solid #1b1a28;flex:none}
+.nav button{flex:1;border:3px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 2px 5px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:13px;font-weight:600;color:var(--text);position:relative}
+.nav button img{width:24px;height:24px}
+.nav button .fb{width:24px;height:24px;font-size:20px;line-height:24px}
+.nav button.on{background:var(--pink);color:#2c2a3c;border-color:var(--pink2)}
+.nav button.on::after{content:"";position:absolute;right:3px;bottom:3px;width:7px;height:7px;border-right:3px solid #2c2a3c;border-bottom:3px solid #2c2a3c}
+
+.screen{flex:1;min-height:0;display:none;flex-direction:column}
+.screen.on{display:flex}
+.scroll{flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+
+/* MAP */
+.map{position:relative;width:100%;height:100%;min-height:520px;background:#5aa9dd url(assets/map_bg.png) center/cover no-repeat;overflow:hidden}
+.map>*{visibility:hidden}.map.ready>*{visibility:visible}
+.map .todaybtn{position:absolute;right:8px;top:8px}
+.today{position:absolute;transform:translate(-50%,0);width:37%;background:var(--paper);color:var(--ink);border:3px solid var(--paper2);border-radius:6px;padding:6px 8px;font-size:11px;line-height:1.5;box-shadow:2px 3px 0 #0004}
+.today b{display:block;font-size:14px;margin-bottom:2px}
+.today label{display:flex;gap:6px;align-items:center;cursor:pointer}
+.today .box{width:11px;height:11px;border:2px solid var(--ink);flex:none;display:inline-block;background:#fff8}
+.today label.done .box{background:var(--ink);box-shadow:inset 0 0 0 2px #fff8}
+.spot{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;border:0;background:none;padding:0}
+.bubble{background:#fff;color:#222;border:3px solid #2c2a3c;border-radius:8px;padding:3px 10px 3px 12px;font-weight:700;font-size:15px;white-space:nowrap;position:relative;box-shadow:2px 3px 0 #0005;display:flex;align-items:center;gap:6px}
+.bubble::after{content:"";position:absolute;left:-9px;top:50%;margin-top:-6px;border:6px solid transparent;border-right:8px solid #2c2a3c}
+.bubble .arr{font-size:11px}
+.dots{display:flex;align-items:center;gap:2px}
+.dots i{width:14px;height:0;border-top:3px dashed #fff9}
+.dots img{width:26px;height:26px;filter:drop-shadow(1px 2px 0 #0005)}
+.spot:active .bubble{transform:translateY(2px)}
+.banner{position:absolute;transform:translate(-50%,-50%) rotate(-3deg);background:var(--paper);color:var(--ink);border:3px solid var(--paper2);padding:6px 12px;font-weight:700;font-size:12px;line-height:1.2;text-align:center;letter-spacing:1px;text-transform:uppercase;box-shadow:2px 3px 0 #0005;pointer-events:none}
+.mapcat{position:absolute;width:11%;transform:translate(-50%,-80%);pointer-events:none;filter:drop-shadow(1px 2px 0 #0004)}
+
+/* PATH */
+.tabs{display:flex;gap:6px;padding:0 10px 8px;flex:none;overflow-x:auto;scrollbar-width:none}
+.tabs button{flex:1 0 auto;min-width:64px;border:3px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 4px 4px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:13px;font-weight:600;position:relative}
+.tabs button img{width:26px;height:26px}
+.tabs button.on{border-color:var(--pink);box-shadow:0 0 0 1px var(--pink2) inset}
+.tabs button.on::before{content:"";position:absolute;left:3px;bottom:3px;width:7px;height:7px;border-left:3px solid var(--pink);border-bottom:3px solid var(--pink)}
+.unithead{margin:0 10px 8px;border:3px solid var(--line);background:var(--panel);border-radius:8px;display:flex;align-items:stretch;flex:none;position:relative;cursor:pointer}
+.unithead .num{padding:12px 14px;font-size:26px;font-weight:700;color:var(--pink);border-right:3px solid var(--line);display:flex;align-items:center}
+.unithead .t{padding:8px 12px;flex:1;min-width:0}
+.unithead .t b{display:block;font-size:19px;letter-spacing:1px;text-transform:uppercase;font-weight:700}
+.unithead .t span{color:var(--muted);font-size:13px}
+.unithead .chev{display:flex;align-items:center;padding:0 14px;font-size:20px;font-weight:700}
+.pathwrap{background:#2c2a3c}
+.tile{position:relative;width:100%;aspect-ratio:1024/1536;background-color:#7cb85a;background-size:100% 100%;background-repeat:no-repeat}
+.node{position:absolute;transform:translate(-50%,-50%);border:0;background:none;padding:0;display:flex;flex-direction:column;align-items:center;width:64px}
+.node img.n{width:54px;height:54px;filter:drop-shadow(0 4px 0 #0003)}
+.node .lbl{position:absolute;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#2c2a3c;text-shadow:0 1px 0 #fff8;pointer-events:none}
+.node.lock .lbl{display:none}
+.node .name{margin-top:2px;background:#2c2a3ccc;color:#fff;font-size:11px;padding:1px 6px;border-radius:4px;white-space:nowrap;max-width:120px;overflow:hidden;text-overflow:ellipsis}
+.node.cur img.n{animation:bob 1.2s ease-in-out infinite}
+.node.shake{animation:shake .35s}
+@keyframes bob{50%{transform:translateY(-4px)}}
+@keyframes shake{25%{transform:translate(-50%,-50%) rotate(-6deg)}75%{transform:translate(-50%,-50%) rotate(6deg)}}
+.pathcat{position:absolute;width:15%;transform:translate(-50%,-105%);pointer-events:none;z-index:3;filter:drop-shadow(1px 3px 0 #0004);transition:left .6s,top .6s}
+.chest{position:absolute;transform:translate(-50%,-50%);width:16%;border:0;background:none;padding:0}
+.chest img{width:100%;filter:drop-shadow(0 3px 0 #0003)}
+.chest.ready img{animation:bob 1s ease-in-out infinite}
+.signpost{position:absolute;width:34%;transform:translate(-50%,-50%);pointer-events:none}
+.signpost img{width:100%;display:block}
+.signpost .txt{position:absolute;left:21%;right:15%;top:15%;bottom:39%;color:#3a2a17;font-weight:700;font-size:10.5px;line-height:1.2;text-transform:uppercase;letter-spacing:.3px;display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+.signpost.css{background:#a9773f;border:3px solid #5a3a1c;border-radius:4px;padding:6px 8px;color:#3a2a17;font-weight:700;font-size:11px;line-height:1.25;text-transform:uppercase;box-shadow:2px 3px 0 #0005}
+.counter{position:absolute;transform:translate(-50%,-50%);background:#2c2a3c;color:#fff;border:3px solid var(--line);border-radius:6px;padding:8px 12px;font-weight:700;font-size:17px;box-shadow:2px 3px 0 #0005;pointer-events:none}
+.locksq{position:absolute;transform:translate(-50%,-50%);width:20%;aspect-ratio:1;border:3px dashed #2c2a3c;background:#2c2a3c33;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.locksq img{width:40%}
+
+/* generic panels */
+.pad{padding:12px}
+.card{border:3px solid var(--line);background:var(--panel);border-radius:8px;padding:12px;margin-bottom:10px}
+.card h3{margin:0 0 8px;font-size:17px;letter-spacing:1px;text-transform:uppercase}
+.row{display:flex;align-items:center;gap:10px}
+.row img{width:28px;height:28px}
+.bar{height:12px;border:3px solid var(--line);border-radius:6px;background:#221f32;overflow:hidden;flex:1}
+.bar i{display:block;height:100%;background:var(--green)}
+.small{font-size:13px;color:var(--muted)}
+.btn{border:3px solid var(--line);background:var(--panel);border-radius:8px;padding:10px 14px;font-weight:700;font-size:16px;letter-spacing:.5px}
+.btn.p{background:var(--pink);color:#2c2a3c;border-color:var(--pink2)}
+.btn.g{background:var(--green);color:#1f3312;border-color:#b7e29a}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.5;cursor:default}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{border:3px solid var(--line);background:var(--panel2);border-radius:8px;padding:10px;text-align:center}
+.stat b{display:block;font-size:24px;color:var(--pink)}
+.stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
+.coll{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.coll .it{border:3px solid var(--line);background:var(--panel2);border-radius:8px;padding:8px;text-align:center;font-size:12px}
+.coll .it img{width:64px;height:64px;object-fit:contain;display:block;margin:0 auto 4px}
+.coll .it.locked img{filter:brightness(0) opacity(.35)}
+textarea.io{width:100%;min-height:80px;background:#221f32;color:var(--text);border:3px solid var(--line);border-radius:8px;font-family:var(--mono);font-size:12px;padding:8px}
+.q label{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #ffffff14;cursor:pointer}
+.q label.done{color:var(--muted);text-decoration:line-through}
+.q .box{width:14px;height:14px;border:2px solid var(--muted);flex:none;border-radius:3px}
+.q label.done .box{background:var(--green);border-color:var(--green)}
+.q .rw{margin-left:auto;color:var(--gold);font-size:13px;text-decoration:none}
+
+/* LESSON overlay */
+#lesson{position:absolute;inset:0;background:var(--bg);display:none;flex-direction:column;z-index:20}
+#lesson.on{display:flex}
+.ltop{display:flex;align-items:center;gap:10px;padding:12px 12px 8px;flex:none}
+.ltop .x{border:3px solid var(--line);background:var(--panel);border-radius:8px;width:38px;height:38px;font-size:18px;font-weight:700}
+.ltop .bar{height:16px}
+.ltop .bar i{background:linear-gradient(90deg,#ffd3de,#f5b8c8);transition:width .3s}
+.hearts{display:flex;gap:2px;align-items:center;font-weight:700}
+.hearts img{width:22px;height:22px}
+.hearts img.off{filter:grayscale(1) opacity(.3)}
+.lbody{flex:1;min-height:0;overflow-y:auto;padding:6px 14px 14px}
+.qtitle{font-size:20px;font-weight:700;line-height:1.3;margin:6px 0 10px}
+.subj{font-size:12px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+pre.code{background:#1b1a28;border:3px solid var(--line);border-radius:8px;padding:10px 12px;font-family:var(--mono);font-size:14px;line-height:1.5;margin:0 0 12px;white-space:pre-wrap;word-break:break-word;color:#e9e4f7}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{border:3px solid var(--line);background:var(--panel);border-radius:8px;padding:12px 12px;text-align:left;font-size:16px;font-family:var(--mono);display:flex;gap:10px;align-items:center;line-height:1.3;word-break:break-word}
+.opt .k{width:24px;height:24px;border-radius:6px;border:2px solid var(--line);display:inline-flex;align-items:center;justify-content:center;font-size:12px;flex:none;font-family:var(--font)}
+.opt.sel{border-color:var(--pink);background:#4a3f55}
+.opt.ok{border-color:var(--green);background:#3b5233}
+.opt.bad{border-color:var(--red);background:#5a3535}
+.opt:disabled{cursor:default}
+.inp{width:100%;border:3px solid var(--line);background:#221f32;color:var(--text);border-radius:8px;padding:12px;font-size:18px;font-family:var(--mono)}
+.inp:focus{outline:none;border-color:var(--pink)}
+.keys{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.keys button{border:3px solid var(--line);background:var(--panel);border-radius:6px;min-width:36px;height:36px;font-size:16px;font-weight:700;padding:0 8px}
+.keys button:active{background:var(--pink);color:#2c2a3c}
+.lfoot{flex:none;padding:12px 14px calc(12px + env(safe-area-inset-bottom));border-top:3px solid #1b1a28;background:#25233a}
+.fb{display:none;margin-bottom:10px;border-radius:8px;padding:10px 12px;font-weight:600;line-height:1.35}
+.fb.on{display:block}
+.fb.ok{background:#3b5233;border:3px solid var(--green)}
+.fb.bad{background:#5a3535;border:3px solid var(--red)}
+.fb small{display:block;font-weight:400;color:#e6dfee;margin-top:3px;font-family:var(--mono);font-size:13px}
+.lfoot .rowb{display:flex;gap:8px}
+.hintbtn{font-size:13px}
+.end{text-align:center;padding:30px 20px}
+.end img{width:150px;margin:0 auto 10px;display:block}
+.end h2{margin:0 0 6px;font-size:26px;letter-spacing:1px}
+.end .gains{display:flex;justify-content:center;gap:12px;margin:14px 0 20px}
+.end .gains div{border:3px solid var(--line);background:var(--panel);border-radius:8px;padding:8px 14px;font-weight:700;display:flex;gap:6px;align-items:center}
+.end .gains img{width:22px;height:22px}
+
+/* toast + modal */
+#toast{position:absolute;left:50%;top:14%;transform:translateX(-50%);background:#2c2a3c;border:3px solid var(--pink);color:#fff;padding:8px 14px;border-radius:8px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .25s;z-index:40;white-space:nowrap;max-width:90%;text-overflow:ellipsis;overflow:hidden}
+#toast.on{opacity:1}
+.modal{position:absolute;inset:0;background:#0009;display:none;align-items:center;justify-content:center;z-index:30;padding:20px}
+.modal.on{display:flex}
+.modal .box{background:var(--bg);border:3px solid var(--line);border-radius:10px;padding:16px;width:100%;max-width:380px;max-height:90%;overflow:auto}
+.modal h3{margin:0 0 10px;letter-spacing:1px}
+.fade{animation:fade .3s}
+@keyframes fade{from{opacity:0}}
+.hide{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-offset:2px}
+</style>
+
+<div id="app">
+  <!-- HUD -->
+  <div class="hud">
+    <div class="avatar" id="avatarBtn" title="Profile"><img src="assets/cat_avatar.png" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{textContent:'🐱',style:'font-size:32px;text-align:center;line-height:52px'}))"></div>
+    <div class="lvl"><div class="lv">Lv. <span id="lv">1</span></div><div class="xpbar"><i id="xpfill"></i></div><div class="xp">XP <span id="xpnow">0</span> / <span id="xpnext">500</span></div></div>
+    <div class="pill corner" id="pillLeaf" title="Day streak"><img src="assets/leaf.png" alt="" onerror="this.replaceWith('🌿')"><span id="streak">0</span></div>
+    <div class="pill corner" title="Coins"><img src="assets/coin.png" alt="" onerror="this.replaceWith('🪙')"><span id="coins">0</span></div>
+    <button class="pill sq corner" id="gearBtn" title="Settings"><img src="assets/gear.png" alt="" onerror="this.replaceWith('⚙️')"></button>
+  </div>
+
+  <!-- MAP -->
+  <section class="screen" id="s-map">
+    <div class="scroll" style="overflow:hidden">
+      <div class="map" id="map">
+        <div class="banner" data-mx="40" data-my="5">A smaller<br>brighter you 🐾</div>
+        <div class="today" id="today" data-mx="77" data-my="1.5"></div>
+            <div class="banner" data-mx="17" data-my="86">Same girl<br>bigger dreams<br>♥</div>
+        <div class="banner" data-mx="83" data-my="86" style="transform:translate(-50%,-50%) rotate(3deg)">Next<br>adventure<br>→</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PATH -->
+  <section class="screen" id="s-path">
+    <div class="tabs" id="tabs"></div>
+    <div class="unithead corner" id="unithead"></div>
+    <div class="scroll" id="pathscroll"><div class="pathwrap" id="pathwrap"></div></div>
+  </section>
+
+  <!-- QUESTS -->
+  <section class="screen" id="s-quests"><div class="scroll pad" id="quests"></div></section>
+  <!-- COLLECTION -->
+  <section class="screen" id="s-coll"><div class="scroll pad" id="coll"></div></section>
+  <!-- STATS -->
+  <section class="screen" id="s-stats"><div class="scroll pad" id="stats"></div></section>
+
+  <!-- NAV -->
+  <div class="nav" id="nav">
+    <button data-s="map"><img src="assets/nav_map.png" alt="" onerror="this.outerHTML='<span class=fb>🗺️</span>'">Map</button>
+    <button data-s="path"><img src="assets/nav_home.png" alt="" onerror="this.outerHTML='<span class=fb>🏠</span>'">Path</button>
+    <button data-s="quests"><img src="assets/nav_quests.png" alt="" onerror="this.outerHTML='<span class=fb>📜</span>'">Quests</button>
+    <button data-s="coll"><img src="assets/nav_collection.png" alt="" onerror="this.outerHTML='<span class=fb>🐱</span>'">Collection</button>
+    <button data-s="stats"><img src="assets/nav_stats.png" alt="" onerror="this.outerHTML='<span class=fb>📊</span>'">Stats</button>
+  </div>
+
+  <!-- LESSON -->
+  <div id="lesson">
+    <div class="ltop">
+      <button class="x" id="lessonX">✕</button>
+      <div class="bar"><i id="lbar"></i></div>
+      <div class="hearts" id="hearts"></div>
+    </div>
+    <div class="lbody" id="lbody"></div>
+    <div class="lfoot">
+      <div class="fb" id="fb"></div>
+      <div class="rowb">
+        <button class="btn hintbtn" id="hintBtn">💡 Hint (3 <img src="assets/coin.png" alt="coins" style="width:14px;vertical-align:-2px" onerror="this.replaceWith('coins')">)</button>
+        <button class="btn p" id="checkBtn" style="flex:1" disabled>Check</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <div class="modal" id="modal"><div class="box" id="modalBox"></div></div>
+</div>
+
+<script src="content.js"></script>
+<script src="content2.js"></script>
+<script src="content3.js"></script>
+<script>
+(() => {
+const C = window.CONTENT, KB = window.KEYBOARDS;
+const SUBJ = ['python','sql','r','italian','turkish','russian'];
+const $ = s => document.querySelector(s);
+const el = (t, cls, html) => { const e = document.createElement(t); if (cls) e.className = cls; if (html != null) e.innerHTML = html; return e; };
+const todayKey = () => new Date().toISOString().slice(0,10);
+
+/* ---------- state ---------- */
+const KEY = 'brighterpath.v1';
+const fresh = () => ({ xp:0, coins:0, streak:0, lastDay:null, done:{}, best:{}, chests:{}, subject:'python', unit:{}, today:{day:null, lessons:0, minutes:0, stars:0, kind:false}, log:[], answered:0, correct:0, weekly:{start:null, lessons:0, subjects:{}, perfect:0} });
+let S = fresh();
+try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch(e) {}
+const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+
+function rollDay() {
+  const d = todayKey();
+  if (S.today.day !== d) S.today = { day:d, lessons:0, minutes:0, stars:0, kind:false };
+  const monday = (() => { const n = new Date(); const day = (n.getDay()+6)%7; n.setDate(n.getDate()-day); return n.toISOString().slice(0,10); })();
+  if (S.weekly.start !== monday) S.weekly = { start:monday, lessons:0, subjects:{}, perfect:0 };
+}
+function bumpStreak() {
+  const d = todayKey(); if (S.lastDay === d) return;
+  const y = new Date(Date.now() - 864e5).toISOString().slice(0,10);
+  S.streak = (S.lastDay === y) ? S.streak + 1 : 1; S.lastDay = d;
+}
+const lessonId = (s,u,l) => `${s}.${u}.${l}`;
+const isDone = (s,u,l) => !!S.done[lessonId(s,u,l)];
+function unitDone(s,u) { return C[s].units[u].lessons.every((_,l) => isDone(s,u,l)); }
+function unitUnlocked(s,u) { return u === 0 || unitDone(s,u-1); }
+function lessonUnlocked(s,u,l) { return unitUnlocked(s,u) && (l === 0 || isDone(s,u,l-1)); }
+function currentUnit(s) { const us = C[s].units; for (let u=0; u<us.length; u++) if (!unitDone(s,u)) return u; return us.length-1; }
+function currentLesson(s,u) { const ls = C[s].units[u].lessons; for (let l=0; l<ls.length; l++) if (!isDone(s,u,l)) return l; return ls.length; }
+const level = () => Math.floor(S.xp/500)+1;
+
+/* ---------- HUD ---------- */
+function renderHud() {
+  $('#lv').textContent = level(); $('#xpnow').textContent = S.xp % 500; $('#xpnext').textContent = 500;
+  $('#xpfill').style.width = ((S.xp % 500)/5) + '%';
+  $('#coins').textContent = S.coins; $('#streak').textContent = S.streak;
+}
+let toastT; function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('on'), 1800); }
+function modal(html, actions) {
+  const m = $('#modal'), b = $('#modalBox'); b.innerHTML = html;
+  const row = el('div','rowb'); row.style.cssText = 'display:flex;gap:8px;margin-top:12px;flex-wrap:wrap';
+  (actions||[{label:'OK'}]).forEach(a => { const bt = el('button','btn'+(a.p?' p':''), a.label); bt.style.flex='1'; bt.onclick = () => { m.classList.remove('on'); a.fn && a.fn(); }; row.appendChild(bt); });
+  b.appendChild(row); m.classList.add('on');
+}
+
+/* ---------- screens ---------- */
+let screen = 'map';
+function show(s) {
+  screen = s;
+  document.querySelectorAll('.screen').forEach(e => e.classList.toggle('on', e.id === 's-'+s));
+  document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.s === s));
+  ({map:renderMap, path:renderPath, quests:renderQuests, coll:renderColl, stats:renderStats})[s]();
+}
+$('#nav').addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(b.dataset.s); });
+
+/* MAP */
+const SPOTS = { python:[37,19], sql:[71,22], r:[41,47], italian:[80,51], turkish:[39,70], russian:[80,71] };
+function renderMap() {
+  const map = $('#map');
+  map.querySelectorAll('.spot').forEach(e => e.remove());
+  SUBJ.forEach(s => {
+    const [x,y] = SPOTS[s]; const b = el('button','spot'); b.dataset.mx = x; b.dataset.my = y;
+    const units = C[s].units;
+    const dots = units.slice(0,3).map((_,u) => {
+      const img = unitDone(s,u) ? 'node_done' : unitUnlocked(s,u) ? 'node_coin' : 'node_lock';
+      return `<img src="assets/${img}.png" alt="" onerror="this.replaceWith('${unitDone(s,u)?'⭐':unitUnlocked(s,u)?'🟡':'🔒'}')">`;
+    }).join('<i></i>');
+    b.innerHTML = `<div class="bubble">${C[s].name} <span class="arr">▶</span></div><div class="dots">${dots}</div>`;
+    b.onclick = () => { S.subject = s; save(); show('path'); };
+    map.appendChild(b);
+  });
+  renderToday(); layoutMap();
+}
+// Position overlays in map-image coordinates (% of the 1024x1536 picture) regardless of how the cover-scaled picture is cropped.
+function layoutMap() {
+  const m = $('#map'), W = m.clientWidth, H = m.clientHeight; if (!W || !H) return;
+  const sc = Math.max(W/1024, H/1536), iw = 1024*sc, ih = 1536*sc, ox = (W-iw)/2, oy = (H-ih)/2;
+  m.querySelectorAll('[data-mx]').forEach(e => { e.style.left = (ox + iw*e.dataset.mx/100)+'px'; e.style.top = (oy + ih*e.dataset.my/100)+'px'; });
+  m.classList.add('ready');
+}
+window.addEventListener('resize', () => { if (screen==='map') layoutMap(); });
+function renderToday() {
+  rollDay();
+  const t = S.today, items = [
+    ['Complete 1 lesson', t.lessons >= 1], ['Practice 10 min', t.minutes >= 10], ['Collect a star', t.stars >= 1], ['Be kind to yourself ♡', t.kind, 'kind']
+  ];
+  $('#today').innerHTML = '<b>Today</b>' + items.map(([txt,ok,k]) => `<label class="${ok?'done':''}" ${k?'data-k='+k:''}><span class="box"></span>${txt}</label>`).join('');
+  $('#today').onclick = e => { const l = e.target.closest('label[data-k]'); if (l) { S.today.kind = !S.today.kind; save(); renderToday(); if (S.today.kind) toast('You deserve it ♡'); } };
+}
+
+/* PATH */
+// Node slots per path tile, as % of tile width/height, following the drawn path.
+const TILES = [
+  { img:'path_bg_1.png', slots:[[50,7],[60,23],[29,43],[42,57],[50,72],[50,86]], chest:[50,95], sign:[77,13], counter:[78,62] },
+  { img:'path_bg_2.png', slots:[[50,7],[40,25],[52,39],[73,54],[52,68],[44,82]], chest:[50,95], sign:[22,14], counter:[22,72] },
+  { img:'path_bg_3.png', slots:[[50,7],[73,25],[56,40],[36,62],[42,77],[54,87]], chest:[50,96], sign:[22,12], counter:[78,60] },
+];
+window.TILES = TILES;
+// Subject-themed tiles (Codex-painted). Subjects without themed tiles fall back to the generic set.
+const THEMED = {
+  python: [
+    { img:'path_python_1.png', slots:[[50,6],[63,22],[41,38],[31,54],[51,70],[53,86]], chest:[51,96], sign:[76,14], counter:[22,60] },
+    { img:'path_python_2.png', slots:[[50,6],[59,22],[29,38],[50,54],[51,70],[46,86]], chest:[54,96], sign:[24,88], counter:[78,60] },
+  ],
+  sql: [
+    // PENDING regen:     { img:'path_sql_1.png', slots:[[50,6],[35,22],[51,38],[61,54],[41,70],[52,86]], chest:[51,96], sign:[76,90], counter:[22,50] },
+    { img:'path_sql_2.png', slots:[[50,6],[59,22],[50,38],[45,54],[58,70],[42,86]], chest:[48,96], sign:[22,88], counter:[78,70] },
+  ],
+  r: [
+    { img:'path_r_1.png', slots:[[50,6],[62,22],[27,38],[34,54],[50,70],[51,86]], chest:[49,96], sign:[24,88], counter:[78,32] },
+    // PENDING regen:     { img:'path_r_2.png', slots:[[51,6],[51,22],[41,38],[57,54],[49,70],[47,86]], chest:[53,96], sign:[24,90], counter:[78,60] },
+  ],
+  italian: [
+    // PENDING regen:     { img:'path_italian_1.png', slots:[[50,6],[33,22],[54,38],[63,54],[40,70],[48,86]], chest:[52,96], sign:[24,88], counter:[78,74] },
+    { img:'path_italian_2.png', slots:[[53,6],[57,22],[41,38],[60,54],[54,70],[46,86]], chest:[53,96], sign:[22,62], counter:[78,74] },
+  ],
+  turkish: [
+    { img:'path_turkish_1.png', slots:[[50,6],[61,22],[41,38],[48,54],[46,70],[44,86]], chest:[51,96], sign:[76,58], counter:[22,50] },
+    { img:'path_turkish_2.png', slots:[[53,6],[53,22],[42,38],[57,54],[43,70],[54,86]], chest:[55,96], sign:[24,88], counter:[78,30] },
+  ],
+  russian: [
+    { img:'path_russian_1.png', slots:[[54,6],[45,22],[57,38],[51,54],[48,70],[59,86]], chest:[50,96], sign:[22,72], counter:[78,88] },
+    { img:'path_russian_2.png', slots:[[54,6],[52,22],[49,38],[62,54],[39,70],[56,86]], chest:[56,96], sign:[22,88], counter:[78,40] },
+  ],
+};
+const tilesFor = s => (THEMED[s] && THEMED[s].length) ? THEMED[s] : TILES;
+const availableTiles = [];
+function renderTabs() {
+  $('#tabs').innerHTML = SUBJ.map(s => `<button data-s="${s}" class="${s===S.subject?'on':''}"><img src="assets/${C[s].icon}" alt="" onerror="this.replaceWith('${({python:'🐍',sql:'🗄️',r:'📊',italian:'🇮🇹',turkish:'🇹🇷',russian:'🇷🇺'})[s]}')">${C[s].name}</button>`).join('');
+  $('#tabs').onclick = e => { const b = e.target.closest('button'); if (b) { S.subject = b.dataset.s; save(); renderPath(); } };
+}
+function renderPath() {
+  renderTabs();
+  const s = S.subject, subj = C[s], cu = currentUnit(s);
+  const uh = $('#unithead'); const done = subj.units[cu].lessons.filter((_,l)=>isDone(s,cu,l)).length;
+  uh.innerHTML = `<div class="num">${String(cu+1).padStart(2,'0')}</div><div class="t"><b>${subj.units[cu].title}</b><span>${subj.units[cu].lessons.length} lessons · ${done} done</span></div><div class="chev">›</div>`;
+  uh.onclick = () => scrollToUnit(cu);
+  const wrap = $('#pathwrap'); wrap.innerHTML = '';
+  subj.units.forEach((unit, u) => {
+    const T = tilesFor(s)[u % tilesFor(s).length];
+    const tile = el('div','tile'); tile.dataset.u = u; tile.style.backgroundImage = `url(assets/${T.img})`;
+    // signpost with topics
+    const sp = el('div','signpost'); sp.style.left = T.sign[0]+'%'; sp.style.top = T.sign[1]+'%';
+    sp.innerHTML = `<img src="assets/sign_wood.png" alt="" onerror="this.parentNode.classList.add('css');this.remove()"><div class="txt">${unit.topics.slice(0,3).map((t,i,a)=>`<span>${t}${i===a.length-1?' →':''}</span>`).join('')}</div>`;
+    tile.appendChild(sp);
+    const n = unit.lessons.length, slots = T.slots;
+    const cl = currentLesson(s,u);
+    unit.lessons.forEach((les, l) => {
+      const slot = slots[Math.round(l * (slots.length-1) / Math.max(1,n-1))] || slots[l];
+      const d = isDone(s,u,l), unl = lessonUnlocked(s,u,l), cur = unl && !d;
+      const b = el('button','node'+(cur?' cur':'')+(!unl?' lock':'')); b.style.left = slot[0]+'%'; b.style.top = slot[1]+'%';
+      const img = d ? 'node_done' : cur ? 'node_current' : unl ? 'node_coin' : 'node_lock';
+      b.innerHTML = `<img class="n" src="assets/${img}.png" alt="" onerror="this.outerHTML='<div class=n style=&quot;width:54px;height:54px;border-radius:50%;background:${d?'#f0c24a':cur?'#f5b8c8':unl?'#f0c24a':'#8e8aa8'};border:4px solid #2c2a3c&quot;></div>'"><div class="lbl">${d?'':l+1}</div><div class="name">${les.title}</div>`;
+      b.onclick = () => {
+        if (!unl) { b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); toast('Finish the previous lesson first'); return; }
+        startLesson(s,u,l);
+      };
+      tile.appendChild(b);
+      if (cur || (u === cu && l === Math.min(cl, n-1) && cl >= n && u === subj.units.length-1)) {
+        const cat = el('img','pathcat'); cat.src = 'assets/cat_front.png'; cat.alt=''; cat.onerror = () => cat.remove();
+        cat.style.left = (slot[0]-12)+'%'; cat.style.top = (slot[1]+4)+'%'; tile.appendChild(cat);
+      }
+    });
+    // counter
+    const ct = el('div','counter', `${unit.lessons.filter((_,l)=>isDone(s,u,l)).length}/${n}`); ct.style.left = T.counter[0]+'%'; ct.style.top = T.counter[1]+'%'; tile.appendChild(ct);
+    // chest
+    const ch = el('button','chest'); ch.style.left = T.chest[0]+'%'; ch.style.top = T.chest[1]+'%';
+    const opened = !!S.chests[s+'.'+u], ready = unitDone(s,u) && !opened;
+    if (ready) ch.classList.add('ready');
+    ch.innerHTML = `<img src="assets/${opened?'chest_open':'chest_closed'}.png" alt="" onerror="this.replaceWith('${opened?'🎁':'📦'}')">`;
+    ch.onclick = () => {
+      if (opened) { toast('Already opened'); return; }
+      if (!ready) { toast('Finish every lesson in this unit'); return; }
+      S.chests[s+'.'+u] = true; S.coins += 25; S.xp += 50; S.today.stars++; save(); renderHud();
+      modal(`<h3>Treasure!</h3><div class="end" style="padding:10px"><img src="assets/chest_open.png" alt="" onerror="this.remove()"><div class="gains"><div><img src="assets/coin.png" alt="" onerror="this.remove()">+25</div><div>+50 XP</div><div>⭐ collectable</div></div><p>You unlocked <b>${COLLECT[collectIndex(s,u)].name}</b> for your collection.</p></div>`, [{label:'Yay!', p:true, fn:renderPath}]);
+    };
+    tile.appendChild(ch);
+    if (!unitUnlocked(s,u)) { const lk = el('div','locksq'); lk.style.left = '50%'; lk.style.top = '50%'; lk.innerHTML = `<img src="assets/nav_lock.png" alt="" onerror="this.replaceWith('🔒')">`; tile.appendChild(lk); }
+    wrap.appendChild(tile);
+  });
+  requestAnimationFrame(() => scrollToUnit(cu));
+}
+function scrollToUnit(u) {
+  const t = document.querySelector(`.tile[data-u="${u}"]`); if (!t) return;
+  const cur = t.querySelector('.node.cur') || t;
+  const sc = $('#pathscroll'); const y = (cur === t ? t.offsetTop : t.offsetTop + cur.offsetTop) - sc.clientHeight*0.45;
+  sc.scrollTo({ top: Math.max(0,y), behavior:'smooth' });
+}
+
+/* ---------- LESSON ---------- */
+let L = null, tStart = 0;
+function shuffle(a) { a = a.slice(); for (let i=a.length-1;i>0;i--) { const j = Math.floor(Math.random()*(i+1)); [a[i],a[j]] = [a[j],a[i]]; } return a; }
+function prepQ(q) {
+  if (q.t !== 'mc') return Object.assign({}, q);
+  const idx = shuffle(q.opts.map((_,i)=>i));
+  return Object.assign({}, q, { opts: idx.map(i=>q.opts[i]), a: idx.indexOf(q.a) });
+}
+function startLesson(s,u,l, practice) {
+  const les = practice ? null : C[s].units[u].lessons[l];
+  const qs = practice ? practice : les.qs.map(prepQ);
+  L = { s,u,l, qs, i:0, hearts:3, correct:0, sel:null, answered:false, practice:!!practice, xp:0, hintUsed:false };
+  tStart = Date.now();
+  $('#lesson').classList.add('on');
+  renderQ();
+}
+function closeLesson() { $('#lesson').classList.remove('on'); L = null; addMinutes(); if (screen==='path') renderPath(); renderHud(); }
+function addMinutes() { if (!tStart) return; rollDay(); S.today.minutes += Math.round((Date.now()-tStart)/60000*10)/10; tStart = 0; save(); }
+$('#lessonX').onclick = () => modal('<h3>Leave lesson?</h3><p>Progress in this lesson will be lost.</p>', [{label:'Stay', p:true},{label:'Leave', fn:closeLesson}]);
+function renderHearts() {
+  $('#hearts').innerHTML = [0,1,2].map(i => `<img src="assets/heart.png" class="${i < L.hearts?'':'off'}" alt="" onerror="this.outerHTML='<span class=&quot;${i<L.hearts?'':'off'}&quot; style=&quot;font-size:18px${i<L.hearts?'':';opacity:.3'}&quot;>❤️</span>'">`).join('');
+}
+function renderQ() {
+  const q = L.qs[L.i], body = $('#lbody'); L.sel = null; L.answered = false; L.hintUsed = false;
+  $('#lbar').style.width = (L.i / L.qs.length * 100) + '%'; renderHearts();
+  const fb = $('#fb'); fb.className = 'fb'; fb.innerHTML = '';
+  const subjName = C[L.s].name + (L.practice ? ' · practice' : ` · ${C[L.s].units[L.u].title}`);
+  let h = `<div class="subj">${subjName}${C[L.s].table && L.s==='sql' ? ' · table ' + C[L.s].table : ''}</div><div class="qtitle">${esc(q.q)}</div>`;
+  if (q.code) h += `<pre class="code">${esc(q.code)}</pre>`;
+  if (q.t === 'mc') {
+    h += `<div class="opts">${q.opts.map((o,i)=>`<button class="opt" data-i="${i}"><span class="k">${'ABCD'[i]}</span><span>${esc(o)}</span></button>`).join('')}</div>`;
+  } else {
+    const kb = q.kb || C[L.s].kb;
+    h += `<input class="inp" id="ans" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Type your answer">`;
+    if (kb && KB[kb]) h += `<div class="keys">${KB[kb].map(k=>`<button data-k="${k}">${k}</button>`).join('')}</div>`;
+  }
+  body.innerHTML = h; body.scrollTop = 0;
+  const check = $('#checkBtn'); check.disabled = true; check.textContent = 'Check';
+  $('#hintBtn').classList.toggle('hide', !q.hint);
+  if (q.t === 'mc') {
+    body.querySelectorAll('.opt').forEach(b => b.onclick = () => { if (L.answered) return; body.querySelectorAll('.opt').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); L.sel = +b.dataset.i; check.disabled = false; });
+  } else {
+    const inp = $('#ans'); inp.oninput = () => { check.disabled = !inp.value.trim(); };
+    inp.onkeydown = e => { if (e.key === 'Enter') { e.preventDefault(); if (!check.disabled) check.click(); } };
+    body.querySelectorAll('.keys button').forEach(b => b.onclick = () => { const st = inp.selectionStart||inp.value.length, en = inp.selectionEnd||st; inp.value = inp.value.slice(0,st) + b.dataset.k + inp.value.slice(en); inp.focus(); inp.setSelectionRange(st+1, st+1); check.disabled = false; });
+    setTimeout(()=>inp.focus(), 50);
+  }
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function norm(s) {
+  return String(s).replace(/İ/g,'i').replace(/I/g,'ı').toLowerCase().replace(/[’‘`]/g,"'").replace(/[“”]/g,'"')
+    .replace(/\s+/g,' ').trim().replace(/[.;!?]+$/,'').replace(/\s*([=,()<>*])\s*/g,'$1').trim();
+}
+function checkAnswer() {
+  const q = L.qs[L.i]; let ok, correctText;
+  if (q.t === 'mc') { ok = L.sel === q.a; correctText = q.opts[q.a]; }
+  else { const v = norm($('#ans').value); ok = q.a.some(a => norm(a) === v); correctText = q.a[0]; }
+  L.answered = true; S.answered++; if (ok) { S.correct++; L.correct++; }
+  const fb = $('#fb'); fb.className = 'fb on ' + (ok ? 'ok' : 'bad');
+  if (ok) { const gain = L.hintUsed ? 5 : 10; L.xp += gain; fb.innerHTML = `Nice! +${gain} XP` + (q.hint && !L.hintUsed ? `<small>${esc(q.hint)}</small>` : ''); }
+  else { L.hearts--; fb.innerHTML = `Not quite. Correct answer:<small>${esc(correctText)}</small>` + (q.hint ? `<small>${esc(q.hint)}</small>` : ''); }
+  if (q.t === 'mc') { document.querySelectorAll('.opt').forEach((b,i) => { b.disabled = true; if (i === q.a) b.classList.add('ok'); else if (i === L.sel) b.classList.add('bad'); }); }
+  else { $('#ans').disabled = true; }
+  renderHearts();
+  const check = $('#checkBtn'); check.textContent = (L.hearts <= 0 && !L.practice) ? 'See result' : (L.i === L.qs.length-1 ? 'Finish' : 'Continue'); check.disabled = false;
+  $('#hintBtn').classList.add('hide');
+  save();
+}
+$('#checkBtn').onclick = () => {
+  if (!L) return;
+  if (!L.answered) { checkAnswer(); return; }
+  if (L.hearts <= 0 && !L.practice) { endLesson(false); return; }
+  L.i++; if (L.i >= L.qs.length) endLesson(true); else renderQ();
+};
+$('#hintBtn').onclick = () => {
+  const q = L.qs[L.i]; if (!q.hint || L.answered) return;
+  if (S.coins < 3) { toast('Not enough coins'); return; }
+  S.coins -= 3; L.hintUsed = true; renderHud(); save();
+  const fb = $('#fb'); fb.className = 'fb on ok'; fb.innerHTML = `💡 ${esc(q.hint)}`; $('#hintBtn').classList.add('hide');
+};
+function endLesson(passed) {
+  $('#lbar').style.width = '100%';
+  const body = $('#lbody'); const perfect = L.correct === L.qs.length;
+  let coins = 0, xp = L.xp;
+  if (passed && !L.practice) {
+    const id = lessonId(L.s,L.u,L.l), first = !S.done[id];
+    S.done[id] = true; coins = first ? 5 : 2; xp += first ? 20 : 5; if (perfect) { xp += 15; S.today.stars++; }
+    rollDay(); S.today.lessons++; S.weekly.lessons++; S.weekly.subjects[L.s] = true; if (perfect) S.weekly.perfect++;
+    S.best[id] = Math.max(S.best[id]||0, L.correct);
+    S.log.unshift({ d:todayKey(), s:L.s, u:L.u, l:L.l, c:L.correct, n:L.qs.length }); S.log = S.log.slice(0,200);
+    bumpStreak();
+  } else if (passed && L.practice) { xp += 10; coins = 1; rollDay(); S.today.lessons += 0; }
+  S.xp += xp; S.coins += coins; save(); renderHud(); addMinutes(); tStart = Date.now();
+  const img = passed ? 'cat_happy' : 'cat_sad';
+  body.innerHTML = `<div class="end fade"><img src="assets/${img}.png" alt="" onerror="this.replaceWith('${passed?'🎉':'😿'}')"><h2>${passed ? (perfect ? 'Perfect!' : 'Lesson complete!') : 'Out of hearts'}</h2><p class="small">${L.correct} of ${L.qs.length} correct${passed?'':' · try again, you were close'}</p><div class="gains"><div>+${xp} XP</div><div><img src="assets/coin.png" alt="" onerror="this.replaceWith('🪙')">+${coins}</div>${perfect&&passed?'<div>⭐ star</div>':''}</div></div>`;
+  $('#fb').className = 'fb'; $('#hintBtn').classList.add('hide');
+  const check = $('#checkBtn'); check.textContent = passed ? 'Continue' : 'Retry'; check.disabled = false;
+  check.onclick = () => { check.onclick = defaultCheck; if (passed) closeLesson(); else { const {s,u,l} = L; closeLesson(); startLesson(s,u,l); } };
+}
+const defaultCheck = $('#checkBtn').onclick;
+
+/* ---------- QUESTS ---------- */
+function renderQuests() {
+  rollDay();
+  const t = S.today, w = S.weekly;
+  const daily = [['Complete 1 lesson', t.lessons, 1], ['Practice 10 min', Math.floor(t.minutes), 10], ['Collect a star (perfect lesson)', t.stars, 1]];
+  const weekly = [['Complete 7 lessons', w.lessons, 7], ['Study 3 different subjects', Object.keys(w.subjects).length, 3], ['3 perfect lessons', w.perfect, 3]];
+  const row = ([txt,v,n]) => `<label class="${v>=n?'done':''}"><span class="box"></span>${txt}<span class="rw">${Math.min(v,n)}/${n}</span></label>`;
+  $('#quests').innerHTML = `<div class="card q"><h3>Today</h3>${daily.map(row).join('')}<label class="${t.kind?'done':''}" id="kindq"><span class="box"></span>Be kind to yourself ♡<span class="rw">tap</span></label></div>
+  <div class="card q"><h3>This week</h3>${weekly.map(row).join('')}</div>
+  <div class="card"><h3>Practice</h3><p class="small">A random mix of questions from lessons you have unlocked. No hearts, +10 XP.</p><div class="grid2">${SUBJ.map(s=>`<button class="btn" data-p="${s}">${C[s].name}</button>`).join('')}</div></div>`;
+  $('#kindq').onclick = () => { S.today.kind = !S.today.kind; save(); renderQuests(); };
+  $('#quests').querySelectorAll('[data-p]').forEach(b => b.onclick = () => startPractice(b.dataset.p));
+}
+function startPractice(s) {
+  let pool = [];
+  C[s].units.forEach((un,u) => un.lessons.forEach((les,l) => { if (lessonUnlocked(s,u,l)) pool.push(...les.qs); }));
+  if (pool.length < 5) pool = C[s].units[0].lessons[0].qs;
+  const qs = shuffle(pool).slice(0,10).map(prepQ);
+  startLesson(s,0,0, qs);
+}
+
+/* ---------- COLLECTION ---------- */
+const COLLECT = [
+  {name:'Sleepy cat', img:'cat_sleep.png'}, {name:'Duck', img:'duck.png'}, {name:'Cat statue', img:'cat_statue.png'},
+  {name:'Cherry tree', img:'tree_pink.png'}, {name:'Lantern', img:'lantern.png'}, {name:'Bridge', img:'bridge.png'},
+  {name:'Treasure', img:'chest_open.png'}, {name:'Walking cat', img:'cat_side.png'}, {name:'Explorer', img:'cat_back.png'},
+  {name:'Happy cat', img:'cat_happy.png'}, {name:'Flower', img:'flower.png'}, {name:'Old stump', img:'stump.png'},
+  {name:'Stone', img:'rock.png'}, {name:'Bush', img:'bush.png'}, {name:'Oak', img:'tree.png'},
+  {name:'Python corner', img:'landmark_python.png'}, {name:'Data vault', img:'landmark_sql.png'}, {name:'R cottage', img:'landmark_r.png'},
+  {name:'Caffè', img:'landmark_it.png'}, {name:'Cami', img:'landmark_tr.png'}, {name:'Собор', img:'landmark_ru.png'},
+  {name:'Trophy', img:'nav_trophy.png'}, {name:'Gold star', img:'star.png'}, {name:'Lucky leaf', img:'leaf.png'},
+  {name:'Pixel heart', img:'heart.png'}, {name:'Gold coin', img:'coin.png'}, {name:'Tricolore', img:'flag_it.png'},
+  {name:'Ay yıldız', img:'flag_tr.png'}, {name:'Триколор', img:'flag_ru.png'}, {name:'Python logo', img:'icon_python.png'},
+  {name:'R logo', img:'icon_r.png'}, {name:'Database', img:'icon_sql.png'}, {name:'Old signpost', img:'sign_wood.png'},
+  {name:'Notice board', img:'sign_parchment.png'}, {name:'Portrait', img:'cat_avatar.png'}, {name:'Compass map', img:'nav_map.png'},
+];
+// Every unit in the game gets its own collectable, in subject order.
+function collectIndex(s,u) { let i = 0; for (const k of SUBJ) { if (k === s) return (i + u) % COLLECT.length; i += C[k].units.length; } return 0; }
+function renderColl() {
+  const opened = Object.keys(S.chests).map(k => { const [s,u] = k.split('.'); return collectIndex(s, Number(u)); });
+  const have = new Set(opened);
+  $('#coll').innerHTML = `<div class="card"><h3>Collection</h3><p class="small">Open a treasure chest at the end of each unit to unlock a collectable. ${have.size}/${COLLECT.length} found.</p><div class="coll">${COLLECT.map((c,i)=>`<div class="it ${have.has(i)?'':'locked'}"><img src="assets/${c.img}" alt="" onerror="this.replaceWith('❔')">${have.has(i)?c.name:'???'}</div>`).join('')}</div></div>`;
+}
+
+/* ---------- STATS ---------- */
+function renderStats() {
+  const acc = S.answered ? Math.round(S.correct/S.answered*100) : 0;
+  const total = SUBJ.reduce((n,s)=>n+C[s].units.reduce((m,u)=>m+u.lessons.length,0),0), done = Object.keys(S.done).length;
+  const bars = SUBJ.map(s => { const n = C[s].units.reduce((m,u)=>m+u.lessons.length,0); const d = C[s].units.reduce((m,u,ui)=>m+u.lessons.filter((_,l)=>isDone(s,ui,l)).length,0); return `<div class="row" style="margin:6px 0"><img src="assets/${C[s].icon}" alt="" onerror="this.remove()"><span style="width:70px">${C[s].name}</span><div class="bar"><i style="width:${d/n*100}%"></i></div><span class="small">${d}/${n}</span></div>`; }).join('');
+  const log = S.log.slice(0,15).map(e => `<div class="row small" style="padding:4px 0;border-bottom:1px solid #ffffff14"><span style="width:82px">${e.d}</span><span style="flex:1">${C[e.s].name} · ${C[e.s].units[e.u].lessons[e.l].title}</span><span>${e.c}/${e.n}</span></div>`).join('') || '<p class="small">No lessons yet. Off you go!</p>';
+  $('#stats').innerHTML = `<div class="grid2" style="margin-bottom:10px"><div class="stat"><b>${S.xp}</b><span>total XP</span></div><div class="stat"><b>${S.streak}</b><span>day streak</span></div><div class="stat"><b>${acc}%</b><span>accuracy</span></div><div class="stat"><b>${done}/${total}</b><span>lessons</span></div></div>
+  <div class="card"><h3>Progress</h3>${bars}</div><div class="card"><h3>Journal</h3>${log}</div>`;
+}
+
+/* ---------- PROFILE / SETTINGS ---------- */
+function openProfile() {
+  modal(`<h3>Profile</h3><p class="small">Level ${level()} · ${S.xp} XP · ${S.coins} coins · ${S.streak} day streak</p>
+  <p class="small">Progress is saved in this browser. Copy the code below to move it to another device, or paste a code and press Import.</p>
+  <textarea class="io" id="io">${esc(btoa(unescape(encodeURIComponent(JSON.stringify(S)))))}</textarea>`,
+  [{label:'Import', fn:() => { try { const v = JSON.parse(decodeURIComponent(escape(atob($('#io').value.trim())))); S = Object.assign(fresh(), v); save(); renderHud(); show(screen); toast('Progress imported'); } catch(e) { toast('Could not read that code'); } }},
+   {label:'Reset all', fn:() => modal('<h3>Reset everything?</h3><p>All progress, XP and coins will be deleted.</p>', [{label:'Keep', p:true},{label:'Reset', fn:() => { S = fresh(); save(); renderHud(); show('map'); }}])},
+   {label:'Close', p:true}]);
+}
+$('#avatarBtn').onclick = openProfile; $('#gearBtn').onclick = openProfile;
+
+/* ---------- boot ---------- */
+rollDay(); save(); renderHud(); show('map');
+})();
+</script>

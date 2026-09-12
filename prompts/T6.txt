@@ -1,0 +1,4 @@
+ITEMS:
+1. assets/path_russian_1.png — RUSSIAN theme: a snowy winter forest. White snow ground with pale blue shadows, the path is trodden snow-dusted dirt, dark green fir trees heavy with snow, white birch trees, a frozen pond with cracked ice, a little snowman, a wooden lantern post with a warm glow, snowdrifts, a small wooden sled.
+2. assets/path_russian_2.png — RUSSIAN theme variant 2: same winter world, with a small log cabin with smoke, a wooden bridge over a frozen stream, more birches, a bench under snow, footprints.
+3. assets/path_turkish_2.png — TURKISH theme: an Ottoman palace garden with red and yellow tulip beds, cypress trees, a tiled pool with a marble edge, a stone arch with blue İznik tiles, a cat sleeping on a patterned carpet, lanterns, a pomegranate tree.

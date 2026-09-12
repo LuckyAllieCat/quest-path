@@ -1,0 +1,10 @@
+ITEMS (all sprites, transparent background):
+1. assets/cat_front.png — The white cat with green backpack and teal scarf, front view standing, full body, like the cat on the path in the reference.
+2. assets/cat_side.png — The same cat in side view walking to the right, full body, backpack visible.
+3. assets/cat_back.png — The same cat seen from behind, walking away (up the path), backpack fully visible.
+4. assets/cat_avatar.png — Square portrait bust of the same cat (head and shoulders with scarf) in the dark purple rounded avatar frame with a pale pink pixel border, like the top-left HUD avatar in the reference. Square 1:1.
+5. assets/cat_sleep.png — The white cat curled up asleep on a wooden bench, like the bench scene in the reference.
+6. assets/cat_statue.png — Grey stone statue of the sitting cat, like the fountain statue.
+7. assets/duck.png — Small white pixel duck with orange beak, side view.
+8. assets/cat_happy.png — The cat jumping with joy, eyes closed happy, small pink sparkles.
+9. assets/cat_sad.png — The cat sitting with drooped ears and a small teardrop.

@@ -1,0 +1,12 @@
+You are generating ONE pixel-art game background with your image generation tool. The attached image(s) are the EXACT target style and the output must be indistinguishable in style from them, as if the same artist drew it on the same day with the same tileset. Study the reference carefully before drawing:
+
+- It is LOW-RESOLUTION pixel art: effectively a 256x384 pixel canvas scaled up 4x to 1024x1536, so every visible "pixel" is a chunky 4x4 block. Trees are ~40 blocks tall. Do NOT draw fine detail; nothing thinner than one block.
+- Every object has a thick, dark outline (near-black brown / dark green). Fills are FLAT cel colours with only 2-3 shades per object, no gradients, no texture noise, no grass-blade texture.
+- Grass is one flat green, the same hue and brightness as the reference (#8fc76a-ish, not lighter), with many small darker-green two-leaf tufts and tiny 3-block white/yellow flowers.
+- The path is sandy (#e8c992-ish), about 1/6 of the width (roughly 170 px wide), with a dark-brown outline exactly ONE block (4 px) thick, never thicker, and a slightly darker sand inner edge. It enters at the exact horizontal centre of the top edge and exits at the exact horizontal centre of the bottom edge, winding in wide S-curves between (so tiles stack vertically).
+- Left and right edges: a vertical dark navy-brown soil border strip about 28 px wide, with tiny pink flowers and little roots poking in, exactly like the reference.
+- Round trees are big simple lollipop shapes with a scalloped outline and a short brown trunk. Water is flat blue (#4aa3e8) with a white pixel foam edge.
+- Composition density like the reference: about 18-24 props spread evenly down the tile, the grass filled with many small two-leaf dark-green tufts, small round bushes, grey rock clusters, log stumps and tiny 3-block white/yellow/pink flowers, so no large area of grass is empty. Big simple shapes.
+- Portrait 1024x1536. NO user interface, NO text, NO signs, NO characters, NO nodes, NO chest.
+
+Save the finished PNG into ./assets/ with the exact filename requested using python3 + PIL (convert to RGB, keep the native 1024x1536 size, do not downscale). Then print the saved path and PIL .size.

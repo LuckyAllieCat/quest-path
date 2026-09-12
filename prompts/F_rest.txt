@@ -1,0 +1,7 @@
+ITEMS (all sprites, transparent background):
+1. assets/cat_happy.png — The white cat with green backpack and teal scarf jumping with joy, eyes closed happy, small pink sparkles.
+2. assets/cat_sad.png — The same cat sitting with drooped ears and a small teardrop.
+3. assets/duck.png — Small white pixel duck with orange beak, side view, like the ducks in the reference.
+4. assets/bridge.png — Small wooden plank bridge with railings, like the bridges in the reference.
+5. assets/flower.png — Small pink pixel flower with leaves.
+6. assets/stump.png — Tree stump seen from above with rings, like the stumps in the reference.

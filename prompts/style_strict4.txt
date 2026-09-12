@@ -1,0 +1,11 @@
+You are generating ONE pixel-art game background with your image generation tool. The FIRST attached image is the exact target: same style, same theme, same SCALE. Your output must look like a neighbouring tile drawn by the same artist with the same sprite sheet. Before drawing, measure the reference and copy these properties exactly:
+
+- SCALE OF PROPS (most important): objects are BIG relative to the tile. A round tree canopy is about a quarter of the tile width (~240 px wide, ~300 px tall). A bush is ~90 px. A rock cluster ~150 px. A fence segment ~180 px. Do NOT draw small, detailed miniatures; draw few large chunky objects.
+- LOW-RESOLUTION pixel art: effectively a 256x384 canvas scaled up 4x to 1024x1536; each visible "pixel" is a 4x4 block. Nothing thinner than one block. No fine texture, no gradients, no noise.
+- Thick dark outlines (near-black brown / dark green) around every object; flat cel fills, 2-3 shades per object; canopies have a scalloped bumpy outline.
+- Grass: one flat mid green exactly like the reference (#7fc25a-ish, NOT lighter or yellower), filled with many small dark-green two-leaf tufts and small round bushes so there is little empty grass.
+- Path: sandy #e8c992, about 150 px wide (roughly 1/7 of the width), with a wavy dark-brown one-block outline and a slightly darker sand inner edge exactly like the reference. It MUST enter at the exact horizontal centre of the top edge and exit at the exact horizontal centre of the bottom edge, winding in wide S-curves between (tiles stack vertically). Use a DIFFERENT curve from the reference.
+- Left and right edges: a vertical dark navy-brown soil border strip about 28 px wide with tiny pink flowers and roots, exactly like the reference.
+- Portrait 1024x1536. NO user interface, NO text, NO signs, NO characters, NO nodes, NO chest.
+
+Save the finished PNG into ./assets/ with the exact filename requested using python3 + PIL (convert to RGB, keep native 1024x1536, do not downscale). Print the saved path and PIL .size.

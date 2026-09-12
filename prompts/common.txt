@@ -1,0 +1,9 @@
+You are generating pixel-art game assets with your image generation tool. The attached image(s) are the exact style reference: cosy top-down 16-bit pixel art, chunky clean pixels, soft pastel palette (grass #8fc76a-ish greens, sandy #e8c992 dirt path, blue #4aa3e8 water with white pixel foam, pink cherry blossom, dark navy-purple #2c2a3c UI), kawaii white cat with a green backpack and teal scarf. Match that style EXACTLY: same palette, same pixel density, same outline style, same lighting.
+
+Rules for every file:
+- Save every finished PNG into ./assets/ in the current working directory with the exact filename requested. Use python3 with PIL to copy/convert from the generated image path.
+- For sprites: the background MUST be fully transparent (alpha 0), not white and not checkerboard. After saving, verify with PIL that the image mode is RGBA and that corner pixels have alpha 0. If the generator returned an opaque background, remove it (flood-fill the background colour from the corners to alpha 0) and save again. Then crop tight to the non-transparent bounding box (im.crop(im.getbbox())) with a 4 px transparent margin.
+- Do not downscale. Keep the native generated resolution.
+- Do not add any text, letters, numbers, or UI chrome unless the item explicitly asks for it.
+- Generate every item in the list, one image each, one after another. Don't stop early. If a generation fails, retry once.
+- At the end, print a list of the files saved with their sizes (PIL .size).

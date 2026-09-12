@@ -1,0 +1,11 @@
+You are generating ONE pixel-art game background with your image generation tool. The FIRST attached image is the exact target style AND theme (same world, same props drawn the same way); the SECOND is the generic base tile that defines the path, grass and border style. The output must be indistinguishable in style from the first image, as if the same artist drew a neighbouring tile. Study it carefully before drawing:
+
+- LOW-RESOLUTION pixel art: effectively a 256x384 canvas scaled up 4x to 1024x1536, every visible "pixel" a chunky 4x4 block. Nothing thinner than one block. No fine detail, no grass-blade texture, no noise.
+- Every object has a thick dark outline (near-black brown / dark green). Flat cel colours, 2-3 shades per object, no gradients.
+- Grass: the same flat green as the reference (#8fc76a-ish), with many small darker-green two-leaf tufts and tiny 3-block flowers.
+- Path: sandy #e8c992-ish, about 1/6 of the width (~170 px), with a dark-brown outline exactly ONE block (4 px) thick on both edges and a slightly darker sand inner edge, exactly like the references. It MUST enter at the exact horizontal centre of the top edge and exit at the exact horizontal centre of the bottom edge, winding in wide S-curves between (tiles stack vertically). Use a DIFFERENT curve shape from the first reference.
+- Left and right edges: a vertical dark navy-brown soil border strip about 28 px wide with tiny pink flowers and roots, exactly like the references.
+- Density like the references: about 18-24 props spread evenly, grass gaps filled with tufts, small round bushes and grey rock clusters.
+- Portrait 1024x1536. NO user interface, NO text, NO signs, NO characters, NO nodes, NO chest.
+
+Save the finished PNG into ./assets/ with the exact filename requested using python3 + PIL (convert to RGB, keep native 1024x1536, do not downscale). Print the saved path and PIL .size.

@@ -1,0 +1,22 @@
+ITEMS (all sprites, transparent background, pixel style matching the reference; icons are simple, high contrast, readable at 48 px):
+1. assets/icon_python.png — Pixel Python logo (blue and yellow intertwined snakes).
+2. assets/icon_r.png — Pixel R language logo (blue letter R on a grey ring). Text "R" IS allowed here.
+3. assets/icon_sql.png — Pixel database cylinder stack icon in light grey-blue.
+4. assets/flag_it.png — Pixel Italian flag (green white red) on a small pole, waving.
+5. assets/flag_tr.png — Pixel Turkish flag (red with white crescent and star), waving.
+6. assets/flag_ru.png — Pixel Russian flag (white blue red), waving.
+7. assets/nav_map.png — White pixel folded map icon with a pin, like the bottom bar in the reference. Just the icon.
+8. assets/nav_quests.png — White pixel scroll icon.
+9. assets/nav_collection.png — White pixel cat face icon.
+10. assets/nav_stats.png — White pixel bar-chart icon (three bars).
+11. assets/nav_journal.png — White pixel open book icon.
+12. assets/nav_home.png — White pixel house icon.
+13. assets/nav_exercises.png — White pixel clipboard/checklist icon.
+14. assets/nav_trophy.png — White pixel trophy icon.
+15. assets/nav_profile.png — White pixel person silhouette icon.
+16. assets/landmark_python.png — The Python landmark from the map: a laptop with the Python logo on a wooden table next to a log stump, small pixel scene, transparent background.
+17. assets/landmark_sql.png — The SQL landmark: small stone building with a database cylinder emblem above the door.
+18. assets/landmark_r.png — The R landmark: cosy cottage with a chalkboard showing a tiny line chart and a blue R emblem.
+19. assets/landmark_it.png — The Italian landmark: café with red striped awning, round table and chairs, Italian flag.
+20. assets/landmark_tr.png — The Turkish landmark: blue-domed mosque with two minarets, carpet stall, Turkish flag.
+21. assets/landmark_ru.png — The Russian landmark: St Basil's style cathedral with colourful onion domes, snowy trees, Russian flag.

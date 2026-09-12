@@ -1,0 +1,5 @@
+ITEMS:
+1. assets/path_r_1.png — R theme: a cosy cottage garden in early autumn. Wooden picket fences, raised flower beds with orange and yellow flowers, a small chalkboard easel, pumpkins, an apple tree, a wheelbarrow, warm yellow-green grass with a few fallen leaves.
+2. assets/path_r_2.png — R theme variant 2: same cottage-garden world, with a greenhouse, a birdbath, beehives, a leafy vine trellis.
+3. assets/path_italian_1.png — ITALIAN theme: a Mediterranean hillside. Tall dark cypress trees, silver-green olive trees, lemon trees with yellow lemons, terracotta pots with red geraniums, a low stone wall, a small café table with two chairs and a red-striped umbrella, warm golden grass, a tiny stone fountain.
+4. assets/path_italian_2.png — ITALIAN theme variant 2: same Mediterranean world, with a vineyard row, a Vespa scooter parked by the path, a pergola with grapes, a stone bench.

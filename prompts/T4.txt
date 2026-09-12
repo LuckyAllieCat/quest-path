@@ -1,0 +1,4 @@
+ITEMS:
+1. assets/path_sql_1.png — SQL theme: an old stone garden. Cobbled grey stone edging along the path, mossy stone walls, ivy, stone archway ruins, a stone well, blue-grey stone slabs with tiny database-cylinder carvings, ferns, a few round dark-green trees, cool green-grey grass.
+2. assets/path_sql_2.png — SQL theme variant 2: same stone-garden world, with a small stone bridge over a narrow stream, stone lanterns, moss patches, a broken column.
+3. assets/path_python_2.png — PYTHON theme: sunny spring meadow with pink cherry-blossom trees, round green trees, red-and-white spotted mushrooms, blossom petals on the grass, a wooden bench, a mushroom ring, a rock cluster, a tiny pond.

@@ -1,0 +1,22 @@
+ITEMS (all sprites, transparent background, chunky pixel style matching the reference):
+1. assets/node_coin.png — Round golden coin path node with a darker gold ring and a slightly lighter centre, like the yellow "1" nodes in the reference but with NO number.
+2. assets/node_lock.png — Round grey-lavender node with a dark padlock icon in the centre, like the locked nodes in the reference.
+3. assets/node_done.png — Round golden node with a white pixel star in the centre (completed lesson).
+4. assets/node_current.png — Round pale-pink node with a white pixel heart in the centre, with a thin white glowing outline.
+5. assets/chest_open.png — Open golden treasure chest with a gold star inside, like the chest in the reference.
+6. assets/chest_closed.png — The same chest closed.
+7. assets/sign_wood.png — Blank wooden signpost board on a post, wide rectangle, warm brown planks with darker outline, NO text, like the signs in the reference.
+8. assets/sign_parchment.png — Blank aged parchment/wooden notice board with pinned corners, wide rectangle, warm beige, NO text, like the "A smaller brighter you" banner in the reference.
+9. assets/heart.png — Pink pixel heart icon.
+10. assets/coin.png — Gold pixel coin icon with a darker gold ring.
+11. assets/leaf.png — Small green pixel leaf sprig icon.
+12. assets/star.png — Gold pixel star icon.
+13. assets/gear.png — White/light grey pixel gear icon.
+14. assets/lantern.png — Black iron street lantern with a warm glowing lamp, like the ones in the reference.
+15. assets/tree.png — Round green pixel tree with a brown trunk.
+16. assets/tree_pink.png — Pink cherry blossom pixel tree.
+17. assets/bush.png — Small round green pixel bush.
+18. assets/rock.png — Small grey pixel rock cluster.
+19. assets/stump.png — Tree stump top-down.
+20. assets/flower.png — Small pink pixel flower.
+21. assets/bridge.png — Small wooden plank bridge, side view like the reference.
