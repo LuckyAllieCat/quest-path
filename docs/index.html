@@ -125,10 +125,31 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 .stat{border:3px solid var(--line);background:var(--panel2);border-radius:8px;padding:10px;text-align:center}
 .stat b{display:block;font-size:24px;color:var(--pink)}
 .stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:1px}
-.coll{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.coll .it{border:3px solid var(--line);background:var(--panel2);border-radius:8px;padding:8px;text-align:center;font-size:12px}
-.coll .it img{width:64px;height:64px;object-fit:contain;display:block;margin:0 auto 4px}
-.coll .it.locked img{filter:brightness(0) opacity(.35)}
+.chead h3{margin:0 0 2px}
+.ctabs{display:flex;gap:6px;margin:10px 0}
+.ctabs button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;border:3px solid var(--line);background:var(--panel2);border-radius:8px;padding:8px 4px;font-size:14px;font-weight:700;color:var(--text)}
+.ctabs button img{width:22px;height:22px}
+.ctabs button.on{background:var(--pink);color:#2c2a3c;border-color:var(--pink2)}
+.room{position:relative;width:100%;aspect-ratio:880/480;background:#6b5a7a url(assets/room_bg.png?v=99ad07e3) center/100% 100% no-repeat;border:3px solid var(--line);border-radius:8px;overflow:hidden;margin-bottom:10px}
+.room img{position:absolute;image-rendering:auto;pointer-events:none}
+.room .rcat{height:31%;transform:translateX(-50%);image-rendering:pixelated}
+.chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:8px;scrollbar-width:none}
+.chips button{flex:none;border:3px solid var(--line);background:var(--panel2);border-radius:8px;padding:5px 10px;font-size:13px;font-weight:600;color:var(--text)}
+.chips button.on{background:var(--pink);color:#2c2a3c;border-color:var(--pink2)}
+.igrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(68px,1fr));gap:8px}
+.icell{position:relative;aspect-ratio:1;border:3px solid var(--line);background:var(--panel2);border-radius:8px;padding:6px;display:flex;align-items:center;justify-content:center;color:var(--text)}
+.icell img{max-width:100%;max-height:100%;object-fit:contain;image-rendering:auto}
+.icell.on{border-color:var(--pink);box-shadow:0 0 0 2px var(--pink2) inset}
+.icell.locked img{filter:grayscale(1) brightness(.55) opacity(.6)}
+.icell .tag{position:absolute;right:3px;bottom:2px;font-size:11px;font-weight:700;background:#1b1a28cc;border-radius:4px;padding:0 4px;display:flex;align-items:center;gap:2px}
+.icell .tag img{width:11px;height:11px}
+.icell.soon{border-style:dashed;font-size:11px;text-align:center;color:var(--muted);flex-direction:column}
+.shoprow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #ffffff14}
+.shoprow .th{width:56px;height:56px;flex:none;border:3px solid var(--line);background:var(--panel2);border-radius:8px;display:flex;align-items:center;justify-content:center;padding:4px}
+.shoprow .th img{max-width:100%;max-height:100%}
+.shoprow .nm{flex:1;font-weight:700}
+.shoprow .btn{padding:6px 10px;font-size:14px;display:flex;align-items:center;gap:4px}
+.shoprow .btn img{width:14px;height:14px}
 textarea.io{width:100%;min-height:80px;background:#221f32;color:var(--text);border:3px solid var(--line);border-radius:8px;font-family:var(--mono);font-size:12px;padding:8px}
 .q label{display:flex;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid #ffffff14;cursor:pointer}
 .q label.done{color:var(--muted);text-decoration:line-through}
@@ -194,7 +215,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-o
 <div id="app">
   <!-- HUD -->
   <div class="hud">
-    <div class="avatar" id="avatarBtn" title="Profile"><img src="assets/cat_avatar.png?v=91fb6a96" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{textContent:'🐱',style:'font-size:32px;text-align:center;line-height:52px'}))"></div>
+    <div class="avatar" id="avatarBtn" title="Profile"><img id="avatarImg" src="assets/cat_avatar.png?v=91fb6a96" alt="" onerror="this.replaceWith(Object.assign(document.createElement('div'),{textContent:'🐱',style:'font-size:32px;text-align:center;line-height:52px'}))"></div>
     <div class="lvl"><div class="lv">Lv. <span id="lv">1</span></div><div class="xpbar"><i id="xpfill"></i></div><div class="xp">XP <span id="xpnow">0</span> / <span id="xpnext">500</span></div></div>
     <div class="pill corner" id="pillLeaf" title="Day streak"><img src="assets/leaf.png?v=17b7f89e" alt="" onerror="this.replaceWith('🌿')"><span id="streak">0</span></div>
     <div class="pill corner" title="Coins"><img src="assets/coin.png?v=8af4edaa" alt="" onerror="this.replaceWith('🪙')"><span id="coins">0</span></div>
@@ -219,8 +240,8 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-o
 
   <!-- QUESTS -->
   <section class="screen" id="s-quests"><div class="scroll pad" id="quests"></div></section>
-  <!-- COLLECTION -->
-  <section class="screen" id="s-coll"><div class="scroll pad" id="coll"></div></section>
+  <!-- CUSTOMIZE -->
+  <section class="screen" id="s-cust"><div class="scroll pad" id="cust"></div></section>
   <!-- STATS -->
   <section class="screen" id="s-stats"><div class="scroll pad" id="stats"></div></section>
 
@@ -229,7 +250,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-o
     <button data-s="map"><img src="assets/nav_map.png?v=d270ed62" alt="" onerror="this.outerHTML='<span class=fb>🗺️</span>'">Map</button>
     <button data-s="path"><img src="assets/nav_home.png?v=2eda363e" alt="" onerror="this.outerHTML='<span class=fb>🏠</span>'">Path</button>
     <button data-s="quests"><img src="assets/nav_quests.png?v=82ecc2d3" alt="" onerror="this.outerHTML='<span class=fb>📜</span>'">Quests</button>
-    <button data-s="coll"><img src="assets/nav_collection.png?v=abb94fb1" alt="" onerror="this.outerHTML='<span class=fb>🐱</span>'">Collection</button>
+    <button data-s="cust"><img src="assets/nav_collection.png?v=abb94fb1" alt="" onerror="this.outerHTML='<span class=fb>🐱</span>'">Customize</button>
     <button data-s="stats"><img src="assets/nav_stats.png?v=a2f1f33d" alt="" onerror="this.outerHTML='<span class=fb>📊</span>'">Stats</button>
   </div>
 
@@ -267,9 +288,10 @@ const todayKey = () => new Date().toISOString().slice(0,10);
 
 /* ---------- state ---------- */
 const KEY = 'brighterpath.v1';
-const fresh = () => ({ xp:0, coins:0, streak:0, lastDay:null, done:{}, best:{}, chests:{}, subject:'python', unit:{}, today:{day:null, lessons:0, minutes:0, stars:0, kind:false}, log:[], answered:0, correct:0, weekly:{start:null, lessons:0, subjects:{}, perfect:0} });
+const fresh = () => ({ xp:0, coins:0, streak:0, lastDay:null, done:{}, best:{}, chests:{}, subject:'python', unit:{}, today:{day:null, lessons:0, minutes:0, stars:0, kind:false}, log:[], answered:0, correct:0, weekly:{start:null, lessons:0, subjects:{}, perfect:0}, home:{owned:['bed','window','rug'], placed:['bed','window','rug']}, outfits:{owned:['explorer'], worn:'explorer'} });
 let S = fresh();
-try { const raw = localStorage.getItem(KEY); if (raw) S = Object.assign(fresh(), JSON.parse(raw)); } catch(e) {}
+let needHomeMigration = false;
+try { const raw = localStorage.getItem(KEY); if (raw) { const saved = JSON.parse(raw); S = Object.assign(fresh(), saved); needHomeMigration = !saved.home; } } catch(e) {}
 const save = () => { try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
 
 function rollDay() {
@@ -297,6 +319,7 @@ function renderHud() {
   $('#lv').textContent = level(); $('#xpnow').textContent = S.xp % 500; $('#xpnext').textContent = 500;
   $('#xpfill').style.width = ((S.xp % 500)/5) + '%';
   $('#coins').textContent = S.coins; $('#streak').textContent = S.streak;
+  const av = $('#avatarImg'); if (av && !av.src.endsWith(catImg('avatar'))) av.src = catImg('avatar');
 }
 let toastT; function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(()=>t.classList.remove('on'), 1800); }
 function modal(html, actions) {
@@ -312,7 +335,7 @@ function show(s) {
   screen = s;
   document.querySelectorAll('.screen').forEach(e => e.classList.toggle('on', e.id === 's-'+s));
   document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('on', b.dataset.s === s));
-  ({map:renderMap, path:renderPath, quests:renderQuests, coll:renderColl, stats:renderStats})[s]();
+  ({map:renderMap, path:renderPath, quests:renderQuests, cust:renderCust, stats:renderStats})[s]();
 }
 $('#nav').addEventListener('click', e => { const b = e.target.closest('button'); if (b) show(b.dataset.s); });
 
@@ -326,7 +349,7 @@ function renderMap() {
     const units = C[s].units;
     const dots = units.slice(0,3).map((_,u) => {
       const img = unitDone(s,u) ? 'node_done' : unitUnlocked(s,u) ? 'node_coin' : 'node_lock';
-      return `<img src="assets/${img}.png?v=bd487c7e" alt="" onerror="this.replaceWith('${unitDone(s,u)?'⭐':unitUnlocked(s,u)?'🟡':'🔒'}')">`;
+      return `<img src="assets/${img}.png?v=36b5a4d5" alt="" onerror="this.replaceWith('${unitDone(s,u)?'⭐':unitUnlocked(s,u)?'🟡':'🔒'}')">`;
     }).join('<i></i>');
     b.innerHTML = `<div class="bubble">${C[s].name} <span class="arr">▶</span></div><div class="dots">${dots}</div>`;
     b.onclick = () => { S.subject = s; save(); show('path'); };
@@ -389,7 +412,7 @@ const THEMED = {
 const tilesFor = s => (THEMED[s] && THEMED[s].length) ? THEMED[s] : TILES;
 const availableTiles = [];
 function renderTabs() {
-  $('#tabs').innerHTML = SUBJ.map(s => `<button data-s="${s}" class="${s===S.subject?'on':''}"><img src="assets/${C[s].icon}?v=bd487c7e" alt="" onerror="this.replaceWith('${({python:'🐍',sql:'🗄️',r:'📊',italian:'🇮🇹',turkish:'🇹🇷',russian:'🇷🇺'})[s]}')">${C[s].name}</button>`).join('');
+  $('#tabs').innerHTML = SUBJ.map(s => `<button data-s="${s}" class="${s===S.subject?'on':''}"><img src="assets/${C[s].icon}?v=36b5a4d5" alt="" onerror="this.replaceWith('${({python:'🐍',sql:'🗄️',r:'📊',italian:'🇮🇹',turkish:'🇹🇷',russian:'🇷🇺'})[s]}')">${C[s].name}</button>`).join('');
   $('#tabs').onclick = e => { const b = e.target.closest('button'); if (b) { S.subject = b.dataset.s; save(); renderPath(); } };
 }
 function renderPath() {
@@ -401,7 +424,7 @@ function renderPath() {
   const wrap = $('#pathwrap'); wrap.innerHTML = '';
   subj.units.forEach((unit, u) => {
     const T = tilesFor(s)[u % tilesFor(s).length];
-    const tile = el('div','tile'); tile.dataset.u = u; tile.style.backgroundImage = `url(assets/${T.img}?v=bd487c7e)`;
+    const tile = el('div','tile'); tile.dataset.u = u; tile.style.backgroundImage = `url(assets/${T.img}?v=36b5a4d5)`;
     // signpost with topics
     const sp = el('div','signpost'); sp.style.left = T.sign[0]+'%'; sp.style.top = T.sign[1]+'%';
     sp.innerHTML = `<img src="assets/sign_wood.png?v=fef69731" alt="" onerror="this.parentNode.classList.add('css');this.remove()"><div class="txt">${unit.topics.slice(0,3).map((t,i,a)=>`<span>${t}${i===a.length-1?' →':''}</span>`).join('')}</div>`;
@@ -413,14 +436,14 @@ function renderPath() {
       const d = isDone(s,u,l), unl = lessonUnlocked(s,u,l), cur = unl && !d;
       const b = el('button','node'+(cur?' cur':'')+(!unl?' lock':'')); b.style.left = slot[0]+'%'; b.style.top = slot[1]+'%';
       const img = d ? 'node_done' : cur ? 'node_current' : unl ? 'node_coin' : 'node_lock';
-      b.innerHTML = `<img class="n" src="assets/${img}.png?v=bd487c7e" alt="" onerror="this.outerHTML='<div class=n style=&quot;width:54px;height:54px;border-radius:50%;background:${d?'#f0c24a':cur?'#f5b8c8':unl?'#f0c24a':'#8e8aa8'};border:4px solid #2c2a3c&quot;></div>'"><div class="lbl">${d?'':l+1}</div><div class="name">${les.title}</div>`;
+      b.innerHTML = `<img class="n" src="assets/${img}.png?v=36b5a4d5" alt="" onerror="this.outerHTML='<div class=n style=&quot;width:54px;height:54px;border-radius:50%;background:${d?'#f0c24a':cur?'#f5b8c8':unl?'#f0c24a':'#8e8aa8'};border:4px solid #2c2a3c&quot;></div>'"><div class="lbl">${d?'':l+1}</div><div class="name">${les.title}</div>`;
       b.onclick = () => {
         if (!unl) { b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); toast('Finish the previous lesson first'); return; }
         startLesson(s,u,l);
       };
       tile.appendChild(b);
       if (cur || (u === cu && l === Math.min(cl, n-1) && cl >= n && u === subj.units.length-1)) {
-        const cat = el('img','pathcat'); cat.src = 'assets/cat_front.png?v=4029aad5'; cat.alt=''; cat.onerror = () => cat.remove();
+        const cat = el('img','pathcat'); cat.src = catImg('front'); cat.alt=''; cat.onerror = () => cat.remove();
         cat.style.left = (slot[0]-12)+'%'; cat.style.top = (slot[1]+4)+'%'; tile.appendChild(cat);
       }
     });
@@ -430,12 +453,12 @@ function renderPath() {
     const ch = el('button','chest'); ch.style.left = T.chest[0]+'%'; ch.style.top = T.chest[1]+'%';
     const opened = !!S.chests[s+'.'+u], ready = unitDone(s,u) && !opened;
     if (ready) ch.classList.add('ready');
-    ch.innerHTML = `<img src="assets/${opened?'chest_open':'chest_closed'}.png?v=bd487c7e" alt="" onerror="this.replaceWith('${opened?'🎁':'📦'}')">`;
+    ch.innerHTML = `<img src="assets/${opened?'chest_open':'chest_closed'}.png?v=36b5a4d5" alt="" onerror="this.replaceWith('${opened?'🎁':'📦'}')">`;
     ch.onclick = () => {
       if (opened) { toast('Already opened'); return; }
       if (!ready) { toast('Finish every lesson in this unit'); return; }
-      S.chests[s+'.'+u] = true; S.coins += 25; S.xp += 50; S.today.stars++; save(); renderHud();
-      modal(`<h3>Treasure!</h3><div class="end" style="padding:10px"><img src="assets/chest_open.png?v=0ac0ace5" alt="" onerror="this.remove()"><div class="gains"><div><img src="assets/coin.png?v=8af4edaa" alt="" onerror="this.remove()">+25</div><div>+50 XP</div><div>⭐ collectable</div></div><p>You unlocked <b>${COLLECT[collectIndex(s,u)].name}</b> for your collection.</p></div>`, [{label:'Yay!', p:true, fn:renderPath}]);
+      S.chests[s+'.'+u] = true; S.coins += 25; S.xp += 50; S.today.stars++; const it = grantItem('chest'); save(); renderHud();
+      modal(`<h3>Treasure!</h3><div class="end" style="padding:10px"><img src="assets/chest_open.png?v=0ac0ace5" alt="" onerror="this.remove()"><div class="gains"><div><img src="assets/coin.png?v=8af4edaa" alt="" onerror="this.remove()">+25</div><div>+50 XP</div><div>🎁 home item</div></div><p>${it ? `You found <b>${it.name}</b> for your home! It's in <b>Customize</b>.` : 'Your home is full, so here are 20 bonus coins!'}</p></div>`, [{label:'Yay!', p:true, fn:renderPath}]);
     };
     tile.appendChild(ch);
     if (!unitUnlocked(s,u)) { const lk = el('div','locksq'); lk.style.left = '50%'; lk.style.top = '50%'; lk.innerHTML = `<img src="assets/nav_lock.png?v=49e46fa6" alt="" onerror="this.replaceWith('🔒')">`; tile.appendChild(lk); }
@@ -466,7 +489,7 @@ function startLesson(s,u,l, practice) {
   $('#lesson').classList.add('on');
   renderQ();
 }
-function closeLesson() { $('#lesson').classList.remove('on'); L = null; addMinutes(); if (screen==='path') renderPath(); renderHud(); }
+function closeLesson() { $('#lesson').classList.remove('on'); L = null; addMinutes(); checkQuestRewards(); if (screen==='path') renderPath(); renderHud(); }
 function addMinutes() { if (!tStart) return; rollDay(); S.today.minutes += Math.round((Date.now()-tStart)/60000*10)/10; tStart = 0; save(); }
 $('#lessonX').onclick = () => modal('<h3>Leave lesson?</h3><p>Progress in this lesson will be lost.</p>', [{label:'Stay', p:true},{label:'Leave', fn:closeLesson}]);
 function renderHearts() {
@@ -544,7 +567,7 @@ function endLesson(passed) {
   } else if (passed && L.practice) { xp += 10; coins = 1; rollDay(); S.today.lessons += 0; }
   S.xp += xp; S.coins += coins; save(); renderHud(); addMinutes(); tStart = Date.now();
   const img = passed ? 'cat_happy' : 'cat_sad';
-  body.innerHTML = `<div class="end fade"><img src="assets/${img}.png?v=bd487c7e" alt="" onerror="this.replaceWith('${passed?'🎉':'😿'}')"><h2>${passed ? (perfect ? 'Perfect!' : 'Lesson complete!') : 'Out of hearts'}</h2><p class="small">${L.correct} of ${L.qs.length} correct${passed?'':' · try again, you were close'}</p><div class="gains"><div>+${xp} XP</div><div><img src="assets/coin.png?v=8af4edaa" alt="" onerror="this.replaceWith('🪙')">+${coins}</div>${perfect&&passed?'<div>⭐ star</div>':''}</div></div>`;
+  body.innerHTML = `<div class="end fade"><img src="assets/${img}.png?v=36b5a4d5" alt="" onerror="this.replaceWith('${passed?'🎉':'😿'}')"><h2>${passed ? (perfect ? 'Perfect!' : 'Lesson complete!') : 'Out of hearts'}</h2><p class="small">${L.correct} of ${L.qs.length} correct${passed?'':' · try again, you were close'}</p><div class="gains"><div>+${xp} XP</div><div><img src="assets/coin.png?v=8af4edaa" alt="" onerror="this.replaceWith('🪙')">+${coins}</div>${perfect&&passed?'<div>⭐ star</div>':''}</div></div>`;
   $('#fb').className = 'fb'; $('#hintBtn').classList.add('hide');
   const check = $('#checkBtn'); check.textContent = passed ? 'Continue' : 'Retry'; check.disabled = false;
   check.onclick = () => { check.onclick = defaultCheck; if (passed) closeLesson(); else { const {s,u,l} = L; closeLesson(); startLesson(s,u,l); } };
@@ -559,9 +582,12 @@ function renderQuests() {
   const weekly = [['Complete 7 lessons', w.lessons, 7], ['Study 3 different subjects', Object.keys(w.subjects).length, 3], ['3 perfect lessons', w.perfect, 3]];
   const row = ([txt,v,n]) => `<label class="${v>=n?'done':''}"><span class="box"></span>${txt}<span class="rw">${Math.min(v,n)}/${n}</span></label>`;
   $('#quests').innerHTML = `<div class="card q"><h3>Today</h3>${daily.map(row).join('')}<label class="${t.kind?'done':''}" id="kindq"><span class="box"></span>Be kind to yourself ♡<span class="rw">tap</span></label></div>
+  <p class="small" style="margin:-4px 2px 10px">🎁 Finish all three daily quests for a home item.</p>
   <div class="card q"><h3>This week</h3>${weekly.map(row).join('')}</div>
+  <p class="small" style="margin:-4px 2px 10px">🎁 Every weekly quest you finish unlocks a home item.</p>
   <div class="card"><h3>Practice</h3><p class="small">A random mix of questions from lessons you have unlocked. No hearts, +10 XP.</p><div class="grid2">${SUBJ.map(s=>`<button class="btn" data-p="${s}">${C[s].name}</button>`).join('')}</div></div>`;
   $('#kindq').onclick = () => { S.today.kind = !S.today.kind; save(); renderQuests(); };
+  checkQuestRewards();
   $('#quests').querySelectorAll('[data-p]').forEach(b => b.onclick = () => startPractice(b.dataset.p));
 }
 function startPractice(s) {
@@ -572,34 +598,105 @@ function startPractice(s) {
   startLesson(s,0,0, qs);
 }
 
-/* ---------- COLLECTION ---------- */
-const COLLECT = [
-  {name:'Sleepy cat', img:'cat_sleep.png'}, {name:'Duck', img:'duck.png'}, {name:'Cat statue', img:'cat_statue.png'},
-  {name:'Cherry tree', img:'tree_pink.png'}, {name:'Lantern', img:'lantern.png'}, {name:'Bridge', img:'bridge.png'},
-  {name:'Treasure', img:'chest_open.png'}, {name:'Walking cat', img:'cat_side.png'}, {name:'Explorer', img:'cat_back.png'},
-  {name:'Happy cat', img:'cat_happy.png'}, {name:'Flower', img:'flower.png'}, {name:'Old stump', img:'stump.png'},
-  {name:'Stone', img:'rock.png'}, {name:'Bush', img:'bush.png'}, {name:'Oak', img:'tree.png'},
-  {name:'Python corner', img:'landmark_python.png'}, {name:'Data vault', img:'landmark_sql.png'}, {name:'R cottage', img:'landmark_r.png'},
-  {name:'Caffè', img:'landmark_it.png'}, {name:'Cami', img:'landmark_tr.png'}, {name:'Собор', img:'landmark_ru.png'},
-  {name:'Trophy', img:'nav_trophy.png'}, {name:'Gold star', img:'star.png'}, {name:'Lucky leaf', img:'leaf.png'},
-  {name:'Pixel heart', img:'heart.png'}, {name:'Gold coin', img:'coin.png'}, {name:'Tricolore', img:'flag_it.png'},
-  {name:'Ay yıldız', img:'flag_tr.png'}, {name:'Триколор', img:'flag_ru.png'}, {name:'Python logo', img:'icon_python.png'},
-  {name:'R logo', img:'icon_r.png'}, {name:'Database', img:'icon_sql.png'}, {name:'Old signpost', img:'sign_wood.png'},
-  {name:'Notice board', img:'sign_parchment.png'}, {name:'Portrait', img:'cat_avatar.png'}, {name:'Compass map', img:'nav_map.png'},
+/* ---------- CUSTOMIZE ---------- */
+// Home items: fixed spots in the room. get = how it is earned: start | chest | quest | shop (price in coins).
+const HOME = [
+  {id:'bed', name:'Cosy bed', cat:'Furniture', get:'start'}, {id:'window', name:'Night window', cat:'Walls', get:'start'}, {id:'rug', name:'Flower rug', cat:'Rugs', get:'start'},
+  {id:'nightstand', name:'Nightstand & lamp', cat:'Furniture', get:'chest'}, {id:'desk', name:'Study desk', cat:'Furniture', get:'chest'},
+  {id:'mapnotes', name:'Notes wall', cat:'Walls', get:'chest'}, {id:'tallplant', name:'Tall plant', cat:'Decor', get:'chest'}, {id:'books', name:'Books & cocoa', cat:'Misc', get:'chest'},
+  {id:'hangplant', name:'Hanging plant', cat:'Decor', get:'quest'}, {id:'shelf', name:'Wall shelf', cat:'Walls', get:'quest'}, {id:'poster', name:'World map', cat:'Walls', get:'quest'},
+  {id:'rightplant', name:'Leafy plant', cat:'Decor', get:'quest'}, {id:'chest', name:'Old chest', cat:'Misc', get:'quest'},
+  {id:'cornerplant', name:'Big monstera', cat:'Decor', get:'shop', price:45}, {id:'backpack', name:'Pink backpack', cat:'Misc', get:'shop', price:60},
+  {id:'cushion', name:'Sleepy friend', cat:'Misc', get:'shop', price:90}, {id:'bookshelf', name:'Bookshelf', cat:'Furniture', get:'shop', price:120},
 ];
-// Every unit in the game gets its own collectable, in subject order.
-function collectIndex(s,u) { let i = 0; for (const k of SUBJ) { if (k === s) return (i + u) % COLLECT.length; i += C[k].units.length; } return 0; }
-function renderColl() {
-  const opened = Object.keys(S.chests).map(k => { const [s,u] = k.split('.'); return collectIndex(s, Number(u)); });
-  const have = new Set(opened);
-  $('#coll').innerHTML = `<div class="card"><h3>Collection</h3><p class="small">Open a treasure chest at the end of each unit to unlock a collectable. ${have.size}/${COLLECT.length} found.</p><div class="coll">${COLLECT.map((c,i)=>`<div class="it ${have.has(i)?'':'locked'}"><img src="assets/${c.img}?v=bd487c7e" alt="" onerror="this.replaceWith('❔')">${have.has(i)?c.name:'???'}</div>`).join('')}</div></div>`;
+// Drawing order, back to front; the cat stands between the rug/tall plant and the front furniture.
+const ROOM_Z = ['window','mapnotes','hangplant','shelf','poster','bookshelf','desk','nightstand','tallplant','rug','CAT','bed','backpack','cushion','rightplant','chest','cornerplant','books'];
+// Position of each item sprite in the room as % [left, top, width, height] (written by tools/key_items.py).
+const ROOM_POS = /*ROOMPOS*/{"rug":[26.7,75.42,42.78,21.67],"mapnotes":[10.23,0.83,14.55,38.33],"shelf":[56.82,6.67,13.64,28.75],"poster":[68.86,2.92,11.36,35.42],"window":[24.09,0.0,34.09,61.67],"bookshelf":[79.09,1.67,20.23,73.33],"desk":[51.82,32.08,30.91,50.42],"hangplant":[0.0,0.0,11.82,40.42],"nightstand":[24.49,38.85,11.82,35.73],"tallplant":[43.41,42.92,10.91,30.0],"bed":[0.0,37.5,26.14,57.08],"backpack":[71.36,57.5,11.82,28.33],"cushion":[77.5,68.75,16.14,23.75],"rightplant":[89.66,51.25,10.34,30.42],"chest":[87.73,75.42,12.27,24.58],"cornerplant":[0.0,66.67,12.73,33.33],"books":[8.18,80.42,12.05,19.58]}/*END*/;
+const OUTFITS = [
+  {id:'explorer', name:'Explorer', price:0}, {id:'sweater', name:'Cosy sweater', price:60}, {id:'italian', name:'Beret & stripes', price:80},
+  {id:'rain', name:'Raincoat', price:90}, {id:'winter', name:'Ushanka', price:100}, {id:'tulip', name:'Tulip crown', price:110}, {id:'wizard', name:'Code wizard', price:150},
+];
+const catImg = kind => S.outfits.worn === 'explorer' ? `assets/cat_${kind}.png` : `assets/cat_${kind}_${S.outfits.worn}.png`;
+const homeItem = id => HOME.find(i => i.id === id);
+// Unlock the next home item earned from a chest or quest (falls back to any non-shop item; coins once the home is full).
+function grantItem(src) {
+  const free = HOME.filter(i => !S.home.owned.includes(i.id));
+  const it = free.find(i => i.get === src) || free.find(i => i.get !== 'shop');
+  if (!it) { S.coins += 20; return null; }
+  S.home.owned.push(it.id); S.home.placed.push(it.id); return it;
+}
+function checkQuestRewards() {
+  rollDay(); const t = S.today, w = S.weekly, got = [];
+  if (t.lessons >= 1 && t.minutes >= 10 && t.stars >= 1 && !t.reward) { t.reward = true; got.push(grantItem('quest')); }
+  w.claimed = w.claimed || [];
+  [w.lessons >= 7, Object.keys(w.subjects).length >= 3, w.perfect >= 3].forEach((ok, i) => { if (ok && !w.claimed.includes(i)) { w.claimed.push(i); got.push(grantItem('quest')); } });
+  if (!got.length) return;
+  save(); renderHud();
+  const names = got.map(it => it ? it.name : '20 coins').join(', ');
+  toast(`🎁 Quest reward: ${names}!`);
+}
+if (needHomeMigration) { Object.keys(S.chests).forEach(() => grantItem('chest')); save(); }
+
+let custTab = 'home', custCat = 'All';
+function roomHTML() {
+  return ROOM_Z.map(id => {
+    if (id === 'CAT') return `<img class="rcat" src="${catImg('front')}" alt="" style="left:45%;top:56%">`;
+    const p = ROOM_POS[id]; if (!p || !S.home.placed.includes(id)) return '';
+    return `<img src="assets/room_${id}.png" alt="" style="left:${p[0]}%;top:${p[1]}%;width:${p[2]}%;height:${p[3]}%" onerror="this.remove()">`;
+  }).join('');
+}
+const coinTag = n => `<span class="tag"><img src="assets/coin.png?v=8af4edaa" alt="">${n}</span>`;
+function renderCust() {
+  const tabs = [['home','nav_home.png','🏠','Home'], ['wardrobe','icon_wardrobe.png','👕','Wardrobe'], ['shop','icon_shop.png','🏪','Shop']];
+  let body = '';
+  if (custTab === 'home') {
+    const cats = ['All','Furniture','Decor','Rugs','Walls','Misc'];
+    const items = HOME.filter(i => custCat === 'All' || i.cat === custCat);
+    body = `<div class="chips">${cats.map(c => `<button data-cat="${c}" class="${c===custCat?'on':''}">${c}</button>`).join('')}</div>
+    <div class="igrid">${items.map(i => { const own = S.home.owned.includes(i.id), on = S.home.placed.includes(i.id);
+      return `<button class="icell ${own?'':'locked'} ${on?'on':''}" data-item="${i.id}" title="${i.name}"><img src="assets/room_${i.id}.png" alt="${i.name}" onerror="this.replaceWith('🪑')">${own ? '' : i.get==='shop' ? coinTag(i.price) : '<span class="tag">🔒</span>'}</button>`; }).join('')}
+    <div class="icell soon">＋<br>More items soon!</div></div>`;
+  } else if (custTab === 'wardrobe') {
+    body = `<p class="small">Tap an outfit to wear it. New outfits are in the shop.</p><div class="igrid">${OUTFITS.map(o => { const own = S.outfits.owned.includes(o.id), on = S.outfits.worn === o.id;
+      return `<button class="icell ${own?'':'locked'} ${on?'on':''}" data-outfit="${o.id}" title="${o.name}"><img src="assets/${o.id==='explorer'?'cat_front.png':'cat_front_'+o.id+'.png'}?v=36b5a4d5" alt="${o.name}">${own ? '' : coinTag(o.price)}</button>`; }).join('')}</div>`;
+  } else {
+    const row = (kind, id, name, price, img, own) => `<div class="shoprow"><div class="th"><img src="assets/${img}?v=36b5a4d5" alt=""></div><div class="nm">${name}</div>${own ? '<span class="small">Owned</span>' : `<button class="btn ${S.coins>=price?'p':''}" data-buy="${kind}:${id}"><img src="assets/coin.png?v=8af4edaa" alt="">${price}</button>`}</div>`;
+    body = `<div class="card"><h3>Outfits</h3>${OUTFITS.filter(o => o.price).map(o => row('outfit', o.id, o.name, o.price, 'cat_front_'+o.id+'.png', S.outfits.owned.includes(o.id))).join('')}</div>
+    <div class="card"><h3>Furniture</h3>${HOME.filter(i => i.get==='shop').map(i => row('item', i.id, i.name, i.price, 'room_'+i.id+'.png', S.home.owned.includes(i.id))).join('')}</div>
+    <p class="small">Earn coins by finishing lessons and opening treasure chests. You have ${S.coins} coins.</p>`;
+  }
+  $('#cust').innerHTML = `<div class="card chead"><h3>Customize ✦</h3><p class="small" style="margin:0">Decorate your home, style your cat, and visit the shop!</p>
+    <div class="ctabs">${tabs.map(([k,img,fb,label]) => `<button data-tab="${k}" class="${k===custTab?'on':''}"><img src="assets/${img}?v=36b5a4d5" alt="" onerror="this.replaceWith('${fb}')">${label}</button>`).join('')}</div>
+    <div class="room">${roomHTML()}</div>${body}</div>`;
+  const c = $('#cust');
+  c.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { custTab = b.dataset.tab; renderCust(); });
+  c.querySelectorAll('[data-cat]').forEach(b => b.onclick = () => { custCat = b.dataset.cat; renderCust(); });
+  c.querySelectorAll('[data-item]').forEach(b => b.onclick = () => {
+    const i = homeItem(b.dataset.item), P = S.home.placed;
+    if (!S.home.owned.includes(i.id)) { if (i.get === 'shop') { custTab = 'shop'; renderCust(); } else toast(i.get === 'chest' ? 'Found in treasure chests' : 'Earned by finishing quests'); return; }
+    if (P.includes(i.id)) P.splice(P.indexOf(i.id), 1); else P.push(i.id);
+    save(); renderCust();
+  });
+  c.querySelectorAll('[data-outfit]').forEach(b => b.onclick = () => {
+    const o = OUTFITS.find(x => x.id === b.dataset.outfit);
+    if (!S.outfits.owned.includes(o.id)) { custTab = 'shop'; renderCust(); return; }
+    S.outfits.worn = o.id; save(); renderHud(); renderCust(); toast(`Wearing: ${o.name}`);
+  });
+  c.querySelectorAll('[data-buy]').forEach(b => b.onclick = () => {
+    const [kind, id] = b.dataset.buy.split(':'), thing = kind === 'outfit' ? OUTFITS.find(x => x.id === id) : homeItem(id);
+    if (S.coins < thing.price) { toast(`You need ${thing.price - S.coins} more coins`); return; }
+    S.coins -= thing.price;
+    if (kind === 'outfit') { S.outfits.owned.push(id); S.outfits.worn = id; } else { S.home.owned.push(id); S.home.placed.push(id); }
+    save(); renderHud(); renderCust(); toast(`Bought ${thing.name}!`);
+  });
 }
 
 /* ---------- STATS ---------- */
 function renderStats() {
   const acc = S.answered ? Math.round(S.correct/S.answered*100) : 0;
   const total = SUBJ.reduce((n,s)=>n+C[s].units.reduce((m,u)=>m+u.lessons.length,0),0), done = Object.keys(S.done).length;
-  const bars = SUBJ.map(s => { const n = C[s].units.reduce((m,u)=>m+u.lessons.length,0); const d = C[s].units.reduce((m,u,ui)=>m+u.lessons.filter((_,l)=>isDone(s,ui,l)).length,0); return `<div class="row" style="margin:6px 0"><img src="assets/${C[s].icon}?v=bd487c7e" alt="" onerror="this.remove()"><span style="width:70px">${C[s].name}</span><div class="bar"><i style="width:${d/n*100}%"></i></div><span class="small">${d}/${n}</span></div>`; }).join('');
+  const bars = SUBJ.map(s => { const n = C[s].units.reduce((m,u)=>m+u.lessons.length,0); const d = C[s].units.reduce((m,u,ui)=>m+u.lessons.filter((_,l)=>isDone(s,ui,l)).length,0); return `<div class="row" style="margin:6px 0"><img src="assets/${C[s].icon}?v=36b5a4d5" alt="" onerror="this.remove()"><span style="width:70px">${C[s].name}</span><div class="bar"><i style="width:${d/n*100}%"></i></div><span class="small">${d}/${n}</span></div>`; }).join('');
   const log = S.log.slice(0,15).map(e => `<div class="row small" style="padding:4px 0;border-bottom:1px solid #ffffff14"><span style="width:82px">${e.d}</span><span style="flex:1">${C[e.s].name} · ${C[e.s].units[e.u].lessons[e.l].title}</span><span>${e.c}/${e.n}</span></div>`).join('') || '<p class="small">No lessons yet. Off you go!</p>';
   $('#stats').innerHTML = `<div class="grid2" style="margin-bottom:10px"><div class="stat"><b>${S.xp}</b><span>total XP</span></div><div class="stat"><b>${S.streak}</b><span>day streak</span></div><div class="stat"><b>${acc}%</b><span>accuracy</span></div><div class="stat"><b>${done}/${total}</b><span>lessons</span></div></div>
   <div class="card"><h3>Progress</h3>${bars}</div><div class="card"><h3>Journal</h3>${log}</div>`;

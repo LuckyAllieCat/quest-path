@@ -7,7 +7,9 @@ for p in sorted(glob.glob('assets/*.png')):
     n = os.path.basename(p)
     if n.startswith('_'): continue
     im = Image.open(p).convert('RGBA')
-    if 'bg' in n or n.startswith('path_'):
+    if n.startswith('room_'):
+        im.save('docs/'+p, optimize=True)   # room scene layers keep full size so they line up
+    elif 'bg' in n or n.startswith('path_'):
         im.quantize(colors=256, method=Image.Quantize.FASTOCTREE).save('docs/'+p, optimize=True)
     else:
         im.thumbnail((512,512), Image.Resampling.LANCZOS)
