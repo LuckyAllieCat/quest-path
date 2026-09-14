@@ -1,6 +1,14 @@
 <meta charset="utf-8">
 <title>Brighter Path</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="Quest Path">
+<meta name="theme-color" content="#25233a">
+<link rel="apple-touch-icon" href="assets/appicon.png">
+<link rel="icon" href="assets/appicon.png">
+<link rel="manifest" href="manifest.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -15,7 +23,7 @@ html,body{height:100%}
 body{margin:0;background:#1d1c29;color:var(--text);font-family:var(--font);font-size:16px;-webkit-font-smoothing:none;overscroll-behavior:none}
 img{image-rendering:pixelated;image-rendering:crisp-edges}
 button{font-family:inherit;color:inherit;cursor:pointer}
-#app{position:relative;max-width:480px;margin:0 auto;height:100dvh;height:100vh;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 0 1px #000, 0 0 40px #0008}
+#app{position:relative;max-width:480px;margin:0 auto;height:100vh;height:100dvh;background:var(--bg);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 0 0 1px #000, 0 0 40px #0008}
 @media (min-width:520px){#app{height:min(100vh,960px);margin-top:calc((100vh - min(100vh,960px))/2);border-radius:12px}}
 
 /* HUD */
@@ -33,7 +41,7 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 .corner::after{content:"";position:absolute;right:3px;bottom:3px;width:6px;height:6px;border-right:2px solid var(--line);border-bottom:2px solid var(--line)}
 
 /* Nav */
-.nav{display:flex;gap:6px;padding:8px 10px calc(8px + env(safe-area-inset-bottom));background:#25233a;border-top:3px solid #1b1a28;flex:none}
+.nav{display:flex;gap:6px;padding:8px 10px max(24px, calc(8px + env(safe-area-inset-bottom)));background:#25233a;border-top:3px solid #1b1a28;flex:none}
 .nav button{flex:1;border:3px solid var(--line);background:var(--panel);border-radius:8px;padding:6px 2px 5px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:13px;font-weight:600;color:var(--text);position:relative}
 .nav button img{width:24px;height:24px}
 .nav button .fb{width:24px;height:24px;font-size:20px;line-height:24px}
@@ -112,7 +120,7 @@ button{font-family:inherit;color:inherit;cursor:pointer}
 .btn.p{background:var(--pink);color:#2c2a3c;border-color:var(--pink2)}
 .btn.g{background:var(--green);color:#1f3312;border-color:#b7e29a}
 .btn.wide{width:100%}
-.btn:disabled{opacity:.5;cursor:default}
+.btn:disabled{opacity:1;background:#4f4b6b;color:#c9c3dd;border-color:#5b5877;cursor:default}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .stat{border:3px solid var(--line);background:var(--panel2);border-radius:8px;padding:10px;text-align:center}
 .stat b{display:block;font-size:24px;color:var(--pink)}
@@ -154,7 +162,7 @@ pre.code{background:#1b1a28;border:3px solid var(--line);border-radius:8px;paddi
 .keys{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
 .keys button{border:3px solid var(--line);background:var(--panel);border-radius:6px;min-width:36px;height:36px;font-size:16px;font-weight:700;padding:0 8px}
 .keys button:active{background:var(--pink);color:#2c2a3c}
-.lfoot{flex:none;padding:12px 14px calc(12px + env(safe-area-inset-bottom));border-top:3px solid #1b1a28;background:#25233a}
+.lfoot{flex:none;padding:12px 14px max(28px, calc(12px + env(safe-area-inset-bottom)));border-top:3px solid #1b1a28;background:#25233a}
 .fb{display:none;margin-bottom:10px;border-radius:8px;padding:10px 12px;font-weight:600;line-height:1.35}
 .fb.on{display:block}
 .fb.ok{background:#3b5233;border:3px solid var(--green)}
@@ -197,10 +205,7 @@ button:focus-visible,input:focus-visible{outline:3px solid var(--pink);outline-o
   <section class="screen" id="s-map">
     <div class="scroll" style="overflow:hidden">
       <div class="map" id="map">
-        <div class="banner" data-mx="40" data-my="5">A smaller<br>brighter you 🐾</div>
         <div class="today" id="today" data-mx="77" data-my="1.5"></div>
-            <div class="banner" data-mx="17" data-my="86">Same girl<br>bigger dreams<br>♥</div>
-        <div class="banner" data-mx="83" data-my="86" style="transform:translate(-50%,-50%) rotate(3deg)">Next<br>adventure<br>→</div>
       </div>
     </div>
   </section>
@@ -349,36 +354,36 @@ function renderToday() {
 /* PATH */
 // Node slots per path tile, as % of tile width/height, following the drawn path.
 const TILES = [
-  { img:'path_bg_1.png', slots:[[50,7],[60,23],[29,43],[42,57],[50,72],[50,86]], chest:[50,95], sign:[77,13], counter:[78,62] },
-  { img:'path_bg_2.png', slots:[[50,7],[40,25],[52,39],[73,54],[52,68],[44,82]], chest:[50,95], sign:[22,14], counter:[22,72] },
-  { img:'path_bg_3.png', slots:[[50,7],[73,25],[56,40],[36,62],[42,77],[54,87]], chest:[50,96], sign:[22,12], counter:[78,60] },
+  { img:'path_bg_1.png', slots:[[50,7],[65,23],[25,43],[43,57],[51,72],[51,86]], chest:[50,95], sign:[77,13], counter:[78,62] },
+  { img:'path_bg_2.png', slots:[[50,7],[36,25],[67,39],[71,54],[36,68],[50,82]], chest:[50,95], sign:[22,14], counter:[22,72] },
+  { img:'path_bg_3.png', slots:[[50,7],[76,25],[53,40],[29,62],[46,77],[51,87]], chest:[50,96], sign:[22,12], counter:[78,60] },
 ];
 window.TILES = TILES;
 // Subject-themed tiles (Codex-painted). Subjects without themed tiles fall back to the generic set.
 const THEMED = {
   python: [
-    { img:'path_python_1.png', slots:[[50,6],[63,22],[41,38],[31,54],[51,70],[53,86]], chest:[51,96], sign:[76,14], counter:[22,60] },
-    { img:'path_python_2.png', slots:[[50,6],[59,22],[29,38],[50,54],[51,70],[46,86]], chest:[54,96], sign:[24,88], counter:[78,60] },
+    { img:'path_python_1.png', slots:[[50,6],[64,22],[25,38],[27,54],[51,70],[51,86]], chest:[50,96], sign:[22,14], counter:[78,60] },
+    { img:'path_python_2.png', slots:[[50,6],[59,22],[28,38],[50,54],[50,70],[46,86]], chest:[50,96], sign:[24,88], counter:[78,60] },
   ],
   sql: [
-    // PENDING regen:     { img:'path_sql_1.png', slots:[[50,6],[35,22],[51,38],[61,54],[41,70],[52,86]], chest:[51,96], sign:[76,90], counter:[22,50] },
-    { img:'path_sql_2.png', slots:[[50,6],[59,22],[50,38],[45,54],[58,70],[42,86]], chest:[48,96], sign:[22,88], counter:[78,70] },
+    { img:'path_sql_1.png', slots:[[51,6],[42,22],[64,38],[49,54],[56,70],[45,86]], chest:[50,96], sign:[76,90], counter:[22,50] },
+    { img:'path_sql_2.png', slots:[[50,6],[60,22],[47,38],[45,54],[58,70],[42,86]], chest:[48,96], sign:[78,88], counter:[78,70] },
   ],
   r: [
-    { img:'path_r_1.png', slots:[[50,6],[62,22],[27,38],[34,54],[50,70],[51,86]], chest:[49,96], sign:[24,88], counter:[78,32] },
-    // PENDING regen:     { img:'path_r_2.png', slots:[[51,6],[51,22],[41,38],[57,54],[49,70],[47,86]], chest:[53,96], sign:[24,90], counter:[78,60] },
+    { img:'path_r_1.png', slots:[[50,6],[64,22],[27,38],[35,54],[50,70],[51,86]], chest:[50,96], sign:[24,88], counter:[78,32] },
+    { img:'path_r_2.png', slots:[[50,6],[43,22],[62,38],[50,54],[50,70],[51,86]], chest:[50,96], sign:[24,90], counter:[78,60] },
   ],
   italian: [
-    // PENDING regen:     { img:'path_italian_1.png', slots:[[50,6],[33,22],[54,38],[63,54],[40,70],[48,86]], chest:[52,96], sign:[24,88], counter:[78,74] },
-    { img:'path_italian_2.png', slots:[[53,6],[57,22],[41,38],[60,54],[54,70],[46,86]], chest:[53,96], sign:[22,62], counter:[78,74] },
+    { img:'path_italian_1.png', slots:[[50,6],[64,22],[25,38],[28,54],[51,70],[51,86]], chest:[50,96], sign:[22,14], counter:[78,60] },
+    { img:'path_italian_2.png', slots:[[50,6],[64,22],[27,38],[36,54],[51,70],[51,86]], chest:[50,96], sign:[24,88], counter:[78,32] },
   ],
   turkish: [
-    { img:'path_turkish_1.png', slots:[[50,6],[61,22],[41,38],[48,54],[46,70],[44,86]], chest:[51,96], sign:[76,58], counter:[22,50] },
-    { img:'path_turkish_2.png', slots:[[53,6],[53,22],[42,38],[57,54],[43,70],[54,86]], chest:[55,96], sign:[24,88], counter:[78,30] },
+    { img:'path_turkish_1.png', slots:[[51,6],[42,22],[64,38],[49,54],[56,70],[45,86]], chest:[50,96], sign:[76,90], counter:[22,50] },
+    { img:'path_turkish_2.png', slots:[[50,6],[64,22],[28,38],[50,54],[50,70],[46,86]], chest:[50,96], sign:[24,88], counter:[78,60] },
   ],
   russian: [
-    { img:'path_russian_1.png', slots:[[54,6],[45,22],[57,38],[51,54],[48,70],[59,86]], chest:[50,96], sign:[22,72], counter:[78,88] },
-    { img:'path_russian_2.png', slots:[[54,6],[52,22],[49,38],[62,54],[39,70],[56,86]], chest:[56,96], sign:[22,88], counter:[78,40] },
+    { img:'path_russian_1.png', slots:[[50,6],[42,22],[62,38],[50,54],[50,70],[51,86]], chest:[50,96], sign:[24,90], counter:[78,60] },
+    { img:'path_russian_2.png', slots:[[50,6],[61,22],[46,38],[45,54],[58,70],[43,86]], chest:[48,96], sign:[78,88], counter:[78,70] },
   ],
 };
 const tilesFor = s => (THEMED[s] && THEMED[s].length) ? THEMED[s] : TILES;
