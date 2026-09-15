@@ -1,0 +1,7 @@
+You are EDITING the attached image with your image generation tool (use it as the edit/base image). It is a cosy pixel-art bedroom for a game. Produce the SAME room completely EMPTY, so furniture can be placed back later as separate sprites.
+
+REMOVE every object: the bed and the cat on it, both nightstands/lamps, the window with its curtains, ivy, the plants on the sill and the town view (replace the window with plain wall), the hanging plant, both wall maps and the notes/photos board, the calendar, the wall shelf and its books and plant, the desk with computer, chair, blanket and plant, the pink backpack, the tall bookshelf with the cat on top, camera and globe, the grey cat on its cushion, the chest, all potted plants, the book stack and mug, the round rug, and the white cat in the middle.
+
+KEEP EXACTLY THE SAME: the room's shape and perspective, the lilac-purple wall with its faint texture, the wall/floor line, the warm wooden plank floor with the same boards and lighting, the same colours and the same pixel-art style and pixel size. Continue the wall and floor naturally where objects were. Same framing and size: nothing moves, the camera does not change. No objects, no text, no characters.
+
+Save the result with python3 + PIL to ./assets/_room_empty.png, converted to RGB and resized with Image.LANCZOS to exactly 880x480. Print the saved path and PIL .size.

@@ -1,0 +1,4 @@
+SOURCE: the attached path_r_2 tile (autumn cottage garden). OUTPUT FILE: assets/_edit_path_russian_1.png
+SEASON CHANGE: make it deep winter. The grass area becomes flat white snow (#eef3fb) with pale blue (#c9d8f0) shadow blocks where the grass tufts were; bushes, rocks and trees get white snow caps. The borders and the sandy path keep their exact shape, outline and colours (only add a few small white snow blocks on the brown border strip and along the path edge).
+REPLACE: the greenhouse, beehives, pumpkins, birdbath, trellis, picket fence, the orange autumn trees and the apple tree.
+WITH (Russian winter forest): big dark-green fir trees (chunky scalloped triangles) with snow caps, two white birch trees with black marks, a frozen pale-blue pond, a snowman with a carrot nose, a wooden lantern post with a warm yellow glow, a small wooden sled.

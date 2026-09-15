@@ -1,0 +1,2 @@
+OUTFIT: a small crown of red and yellow tulips on the head and a blue vest with white embroidered patterns (only what is visible in this head-and-shoulders portrait).
+ATTACHED IMAGE: the cat avatar portrait. OUTPUT FILE: assets/_new_cat_avatar_tulip.png

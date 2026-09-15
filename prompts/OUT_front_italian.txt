@@ -1,0 +1,2 @@
+OUTFIT: a navy-and-white horizontally striped shirt, a small red neckerchief and a tilted red beret on the head.
+ATTACHED IMAGE: the cat sprite. OUTPUT FILE: assets/_new_cat_front_italian.png

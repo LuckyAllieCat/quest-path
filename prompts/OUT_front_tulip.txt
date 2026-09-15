@@ -1,0 +1,2 @@
+OUTFIT: a small crown of red and yellow tulips on the head and a blue vest with white embroidered patterns.
+ATTACHED IMAGE: the cat sprite. OUTPUT FILE: assets/_new_cat_front_tulip.png

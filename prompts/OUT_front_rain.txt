@@ -1,0 +1,2 @@
+OUTFIT: a bright yellow raincoat with buttons and a matching yellow rain hat.
+ATTACHED IMAGE: the cat sprite. OUTPUT FILE: assets/_new_cat_front_rain.png

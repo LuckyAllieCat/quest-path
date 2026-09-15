@@ -1,0 +1,6 @@
+You are EDITING the attached pixel-art world map with your image generation tool (use it as the edit/base image). Make exactly two small corrections and keep every other pixel of the image unchanged (same composition, positions, colours and pixel size):
+
+1. On the left-middle cottage (the R language cottage with the chalkboard), the round grey ring emblem on its roof is empty. Put a bold blue capital letter "R" inside the grey ring, like the R programming language logo, in the same chunky pixel style. This single letter is the only text allowed.
+2. On the mosque island (bottom-left, blue domes and minarets), the small flag next to the domes is drawn with red, white and green stripes, which is wrong. Repaint it as the Turkish flag: solid red with a white crescent and a small white star, same size and pole as now.
+
+Save the result with python3 + PIL to ./assets/_map_clean2.png, converted to RGB, resized with Image.LANCZOS to exactly 1056x1490 if the generated size differs. Print the saved path and PIL .size.

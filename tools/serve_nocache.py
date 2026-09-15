@@ -1,0 +1,9 @@
+# Static server for local testing that tells the browser never to cache, so rebuilt assets always show up.
+import sys, functools, http.server
+class NoCache(http.server.SimpleHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Cache-Control', 'no-store, must-revalidate')
+        super().end_headers()
+    def log_message(self, *a): pass
+port, root = int(sys.argv[1]), sys.argv[2]
+http.server.ThreadingHTTPServer(('127.0.0.1', port), functools.partial(NoCache, directory=root)).serve_forever()

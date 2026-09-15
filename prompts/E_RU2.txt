@@ -1,0 +1,4 @@
+SOURCE: the attached path_sql_2 tile (stone garden with a stream and bridge). OUTPUT FILE: assets/_edit_path_russian_2.png
+SEASON CHANGE: make it deep winter. The grass area becomes flat white snow (#eef3fb) with pale blue (#c9d8f0) shadow blocks where the grass tufts were; bushes, rocks and trees get white snow caps; the stream becomes frozen pale-blue ice with a few crack lines, and the bridge keeps its position with snow on it. The borders and the sandy path keep their exact shape, outline and colours (only add a few small white snow blocks on the brown border strip and along the path edge).
+REPLACE: the stone walls, stone archway, broken column, stone lanterns and lily pads.
+WITH (Russian snowy village edge): a small wooden log cabin with a snowy roof and a grey smoke puff, big dark-green fir trees with snow caps, two white birch trees with black marks, a wooden bench under snow.

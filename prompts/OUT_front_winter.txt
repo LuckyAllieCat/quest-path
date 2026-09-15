@@ -1,0 +1,2 @@
+OUTFIT: a fluffy brown fur ushanka hat with ear flaps and a long red knitted scarf.
+ATTACHED IMAGE: the cat sprite. OUTPUT FILE: assets/_new_cat_front_winter.png

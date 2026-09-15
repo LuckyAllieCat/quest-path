@@ -1,0 +1,3 @@
+SOURCE: the attached path_python_1 tile (spring meadow). OUTPUT FILE: assets/_edit_path_italian_1.png
+REPLACE: the pink cherry-blossom trees, the small pond, the picnic table with laptop and the mushrooms.
+WITH (Italian Mediterranean garden): two tall dark-green cypress trees (tall ovals, scalloped outline), one round lemon tree (like the round green trees but with yellow fruit dots), a small round café table with two chairs and a red-and-white striped umbrella, a small round stone fountain with flat blue water, two terracotta pots with red geranium blobs, and a short low cream stone wall segment.

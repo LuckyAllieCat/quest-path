@@ -1,0 +1,4 @@
+You are EDITING the attached image with your image generation tool (use it as the edit/base image). It is a crop from a cosy pixel-art bedroom.
+Keep ONLY the wooden wall shelf with its books and small potted plant. Replace everything else (the lilac wall, the wooden floor and any other objects) with a flat solid pure magenta background (#FF00FF), with no shadows or gradients on it.
+Keep the kept object at EXACTLY the same position, size, shape, colours and pixel-art style as in the attached image. Complete any part of it that is cut off by other objects so it is a whole object. Do not add anything new. No text.
+Save with python3 + PIL to ./assets/_room/gen_shelf.png, converted to RGB and resized with Image.LANCZOS to exactly 240x276. Print the saved path and PIL .size.

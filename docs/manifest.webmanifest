@@ -1,0 +1,14 @@
+{
+  "name": "Quest Path",
+  "short_name": "Quest Path",
+  "start_url": ".",
+  "scope": ".",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#1d1c29",
+  "theme_color": "#25233a",
+  "icons": [
+    { "src": "assets/appicon.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "assets/appicon.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

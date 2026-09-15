@@ -1,0 +1,12 @@
+You are EDITING the attached image with your image generation tool (use it as the edit/base image). It is a pixel-art world map for a game, but it is a screenshot with user-interface overlays drawn on top. Remove ONLY the overlays and repaint what would naturally be underneath, in exactly the same pixel-art style, so the result is a clean background.
+
+REMOVE these overlays completely:
+- The six white speech-bubble labels with dark outlines: "Python ▶", "SQL ▶", "R ▶", "Italiano ▶", "Türkçe ▶", "Русский ▶".
+- The round gold coins and the round grey padlock-dot icons next to each labelled building (about three per building).
+- The beige "Today" checklist card in the top-right corner with its four checkbox lines.
+
+Underneath, continue the surrounding scenery naturally: trees, cherry blossoms, grass, paths, walls, water, flags and buildings exactly as they continue around each overlay. For the Today card area, continue the forest, cliffs and river from around it.
+
+KEEP EVERYTHING ELSE UNCHANGED: same composition, same positions and sizes of every building, tree, path, river, bridge, fountain, the little white cat, the ducks, the sailboat and the town at the bottom; same colours; same pixel size. No text anywhere. Do not add new UI.
+
+Save the result with python3 + PIL to ./assets/_map_clean.png, converted to RGB and resized with Image.LANCZOS to exactly 1056x1490 if the generated size differs. Print the saved path and PIL .size.

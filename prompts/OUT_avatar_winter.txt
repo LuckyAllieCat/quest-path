@@ -1,0 +1,2 @@
+OUTFIT: a fluffy brown fur ushanka hat with ear flaps and a long red knitted scarf (only what is visible in this head-and-shoulders portrait).
+ATTACHED IMAGE: the cat avatar portrait. OUTPUT FILE: assets/_new_cat_avatar_winter.png

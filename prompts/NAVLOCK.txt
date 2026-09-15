@@ -1,0 +1,2 @@
+ITEMS (sprite, transparent background, pixel style matching the attached nav icons exactly; simple, high contrast, readable at 48 px):
+1. assets/nav_lock.png — White pixel padlock icon (closed shackle, keyhole), same line weight, pixel density and white-with-dark-outline treatment as the attached nav icons. Just the icon.

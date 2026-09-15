@@ -1,0 +1,2 @@
+OUTFIT: a cosy pink-purple knitted sweater with a rolled collar, like a soft chunky jumper (only what is visible in this head-and-shoulders portrait).
+ATTACHED IMAGE: the cat avatar portrait. OUTPUT FILE: assets/_new_cat_avatar_sweater.png

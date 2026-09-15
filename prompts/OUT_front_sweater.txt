@@ -1,0 +1,2 @@
+OUTFIT: a cosy pink-purple knitted sweater with a rolled collar, like a soft chunky jumper.
+ATTACHED IMAGE: the cat sprite. OUTPUT FILE: assets/_new_cat_front_sweater.png

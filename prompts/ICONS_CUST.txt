@@ -1,0 +1,3 @@
+ITEMS (sprites, transparent background, pixel style matching the attached nav icons exactly: white pixel icon with dark outline, simple, high contrast, readable at 24 px):
+1. assets/icon_wardrobe.png — White pixel T-shirt icon with a tiny cat-face print. Just the icon.
+2. assets/icon_shop.png — White pixel shop-front icon with a striped awning. Just the icon.

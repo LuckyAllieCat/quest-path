@@ -1,0 +1,3 @@
+SOURCE: the attached path_sql_1 tile (mossy stone garden). OUTPUT FILE: assets/_edit_path_turkish_1.png
+REPLACE: the grey stone walls, the stone archway, the stone well, the broken column, the stone lantern and the flat stone slabs.
+WITH (Ottoman palace garden): a white kiosk/pavilion with a blue dome, a square fountain with a blue-and-white tiled rim and flat blue water, a small red patterned carpet with a brass tea tray, two beds of red and yellow tulips, one tall dark-green cypress tree, one round pomegranate tree (like the round green trees but with red fruit dots).

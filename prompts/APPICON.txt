@@ -1,0 +1,11 @@
+You are generating ONE square app icon with your image generation tool. The attached image is the game's existing cat avatar: match that style, palette and pixel scale exactly, as if drawn by the same artist from the same sprite sheet.
+
+- SQUARE 1024x1024, full-bleed, NO transparency. The whole canvas must be filled.
+- Low-resolution pixel art: effectively a 256x256 canvas scaled 4x, so every visible "pixel" is a 4x4 block. Nothing thinner than one block. No gradients, no noise, no anti-aliasing.
+- Subject: the white fluffy cat's head and shoulders, front-facing, friendly, big dark eyes with green irises, pink inner ears, pink blush, teal scarf and green backpack straps, exactly as in the reference.
+- Background: flat dark indigo #2c2a3c with a soft pixel path or a few dark-green leaf tufts behind the cat for depth. Keep it simple and high contrast so the cat reads clearly at 60 px.
+- Border: a chunky pink #f5b8c8 rounded-square frame inset about 40 px from the canvas edge, 16 px thick, like the reference avatar frame.
+- IMPORTANT: keep all important detail inside the central 80% of the canvas, because iOS masks the icon to a rounded squircle and will clip the corners.
+- NO text, NO letters, NO user interface, NO drop shadow outside the frame.
+
+Save the finished PNG to ./assets/appicon_alt.png using python3 + PIL (convert to RGB, exactly 1024x1024). Print the saved path and PIL .size.

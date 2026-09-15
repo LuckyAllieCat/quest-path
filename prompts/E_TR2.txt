@@ -1,0 +1,3 @@
+SOURCE: the attached path_python_2 tile (spring meadow). OUTPUT FILE: assets/_edit_path_turkish_2.png
+REPLACE: the pink cherry-blossom trees and pink petals, the mushrooms, the wooden bench and the log with the vine.
+WITH (Ottoman palace garden, different layout): a white kiosk/pavilion with a blue dome, a red patterned carpet with a brass tea tray, a low blue-and-white tiled bench, three beds of red and yellow tulips, two tall dark-green cypress trees, one round pomegranate tree with red fruit dots.

@@ -1,0 +1,2 @@
+OUTFIT: a navy-and-white horizontally striped shirt, a small red neckerchief and a tilted red beret on the head (only what is visible in this head-and-shoulders portrait).
+ATTACHED IMAGE: the cat avatar portrait. OUTPUT FILE: assets/_new_cat_avatar_italian.png

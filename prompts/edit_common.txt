@@ -1,0 +1,11 @@
+You are EDITING the attached image with your image generation tool (use it as the edit/base image, not just as inspiration). It is a background tile from a pixel-art game. Keep EVERYTHING about its art style pixel-for-pixel identical and change ONLY the decorative props on the grass.
+
+KEEP EXACTLY AS IN THE ATTACHED IMAGE (do not redraw, restyle, straighten, or tidy these):
+- The left and right borders: the wide dark navy band with small pink flowers on it, and the wavy brown dirt strip with a few green vine leaves. Same width, same wavy shape, same colours.
+- The sandy path: its exact shape and position, its thick dark-brown outline and its darker sand inner rim.
+- The grass colour and the small light-green two-leaf tufts and tiny flowers.
+- The pixel size (big chunky pixels), the thick near-black outlines on every object, the flat 2-3 shade cel colouring, the bush and tree drawing style.
+
+CHANGE ONLY: replace the themed props listed below with the new props. Draw the new props in exactly the same chunky style as the props you are replacing (same pixel size, same black outline thickness, same flat shading, same simplicity). Make the new themed props BIG and easy to read: each about as large as the round green trees or larger, never small miniatures. Keep the generic round bushes, round green trees and grey rocks where they are unless a new prop needs the space. Do not put anything on the path. No text, no UI, no characters.
+
+Save the finished PNG to the exact filename requested using python3 + PIL (convert to RGB, resize to exactly 1024x1536 with Image.LANCZOS only if the generated size differs). Print the saved path and PIL .size.

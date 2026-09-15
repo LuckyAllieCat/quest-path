@@ -1,0 +1,2 @@
+OUTFIT: a purple wizard cape with small gold stars and a tall purple pointed wizard hat with gold stars (only what is visible in this head-and-shoulders portrait).
+ATTACHED IMAGE: the cat avatar portrait. OUTPUT FILE: assets/_new_cat_avatar_wizard.png

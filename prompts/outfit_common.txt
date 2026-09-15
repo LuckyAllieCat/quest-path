@@ -1,0 +1,7 @@
+You are EDITING the attached pixel-art sprite with your image generation tool (use it as the edit/base image). It shows the game's white fluffy cat. Change ONLY what the cat is wearing, as described below. Remove the teal scarf and the green backpack straps unless the outfit keeps them.
+
+KEEP EXACTLY THE SAME: the cat's pose, position, size and proportions within the canvas, its face, eyes, ears, blush and fur, the canvas size, the pixel size, the thick dark outline style and the soft flat shading. Anything the outfit adds (a hat, a hood) may extend a little above the head but the cat itself must not move or shrink. The new clothes must be drawn in exactly the same chunky pixel-art style.
+BACKGROUND: if the attached image has a transparent background, the result must also have a fully transparent background (alpha 0) around the cat: after saving, check the corners with PIL and flood-fill any solid background colour from the corners to alpha 0. If the attached image has a dark rounded frame with a pink border, keep that frame exactly.
+No text.
+
+Save with python3 + PIL as RGBA, resized with Image.LANCZOS to exactly the attached image's size if it differs, to the exact output filename given. Print the saved path, PIL .mode and .size.

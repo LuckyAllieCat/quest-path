@@ -1,0 +1,2 @@
+OUTFIT: a bright yellow raincoat with buttons and a matching yellow rain hat (only what is visible in this head-and-shoulders portrait).
+ATTACHED IMAGE: the cat avatar portrait. OUTPUT FILE: assets/_new_cat_avatar_rain.png
