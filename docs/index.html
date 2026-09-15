@@ -349,7 +349,7 @@ function renderMap() {
     const units = C[s].units;
     const dots = units.slice(0,3).map((_,u) => {
       const img = unitDone(s,u) ? 'node_done' : unitUnlocked(s,u) ? 'node_coin' : 'node_lock';
-      return `<img src="assets/${img}.png?v=36b5a4d5" alt="" onerror="this.replaceWith('${unitDone(s,u)?'⭐':unitUnlocked(s,u)?'🟡':'🔒'}')">`;
+      return `<img src="assets/${img}.png?v=ae0b6bd2" alt="" onerror="this.replaceWith('${unitDone(s,u)?'⭐':unitUnlocked(s,u)?'🟡':'🔒'}')">`;
     }).join('<i></i>');
     b.innerHTML = `<div class="bubble">${C[s].name} <span class="arr">▶</span></div><div class="dots">${dots}</div>`;
     b.onclick = () => { S.subject = s; save(); show('path'); };
@@ -412,7 +412,7 @@ const THEMED = {
 const tilesFor = s => (THEMED[s] && THEMED[s].length) ? THEMED[s] : TILES;
 const availableTiles = [];
 function renderTabs() {
-  $('#tabs').innerHTML = SUBJ.map(s => `<button data-s="${s}" class="${s===S.subject?'on':''}"><img src="assets/${C[s].icon}?v=36b5a4d5" alt="" onerror="this.replaceWith('${({python:'🐍',sql:'🗄️',r:'📊',italian:'🇮🇹',turkish:'🇹🇷',russian:'🇷🇺'})[s]}')">${C[s].name}</button>`).join('');
+  $('#tabs').innerHTML = SUBJ.map(s => `<button data-s="${s}" class="${s===S.subject?'on':''}"><img src="assets/${C[s].icon}?v=ae0b6bd2" alt="" onerror="this.replaceWith('${({python:'🐍',sql:'🗄️',r:'📊',italian:'🇮🇹',turkish:'🇹🇷',russian:'🇷🇺'})[s]}')">${C[s].name}</button>`).join('');
   $('#tabs').onclick = e => { const b = e.target.closest('button'); if (b) { S.subject = b.dataset.s; save(); renderPath(); } };
 }
 function renderPath() {
@@ -424,7 +424,7 @@ function renderPath() {
   const wrap = $('#pathwrap'); wrap.innerHTML = '';
   subj.units.forEach((unit, u) => {
     const T = tilesFor(s)[u % tilesFor(s).length];
-    const tile = el('div','tile'); tile.dataset.u = u; tile.style.backgroundImage = `url(assets/${T.img}?v=36b5a4d5)`;
+    const tile = el('div','tile'); tile.dataset.u = u; tile.style.backgroundImage = `url(assets/${T.img}?v=ae0b6bd2)`;
     // signpost with topics
     const sp = el('div','signpost'); sp.style.left = T.sign[0]+'%'; sp.style.top = T.sign[1]+'%';
     sp.innerHTML = `<img src="assets/sign_wood.png?v=fef69731" alt="" onerror="this.parentNode.classList.add('css');this.remove()"><div class="txt">${unit.topics.slice(0,3).map((t,i,a)=>`<span>${t}${i===a.length-1?' →':''}</span>`).join('')}</div>`;
@@ -436,7 +436,7 @@ function renderPath() {
       const d = isDone(s,u,l), unl = lessonUnlocked(s,u,l), cur = unl && !d;
       const b = el('button','node'+(cur?' cur':'')+(!unl?' lock':'')); b.style.left = slot[0]+'%'; b.style.top = slot[1]+'%';
       const img = d ? 'node_done' : cur ? 'node_current' : unl ? 'node_coin' : 'node_lock';
-      b.innerHTML = `<img class="n" src="assets/${img}.png?v=36b5a4d5" alt="" onerror="this.outerHTML='<div class=n style=&quot;width:54px;height:54px;border-radius:50%;background:${d?'#f0c24a':cur?'#f5b8c8':unl?'#f0c24a':'#8e8aa8'};border:4px solid #2c2a3c&quot;></div>'"><div class="lbl">${d?'':l+1}</div><div class="name">${les.title}</div>`;
+      b.innerHTML = `<img class="n" src="assets/${img}.png?v=ae0b6bd2" alt="" onerror="this.outerHTML='<div class=n style=&quot;width:54px;height:54px;border-radius:50%;background:${d?'#f0c24a':cur?'#f5b8c8':unl?'#f0c24a':'#8e8aa8'};border:4px solid #2c2a3c&quot;></div>'"><div class="lbl">${d?'':l+1}</div><div class="name">${les.title}</div>`;
       b.onclick = () => {
         if (!unl) { b.classList.remove('shake'); void b.offsetWidth; b.classList.add('shake'); toast('Finish the previous lesson first'); return; }
         startLesson(s,u,l);
@@ -453,7 +453,7 @@ function renderPath() {
     const ch = el('button','chest'); ch.style.left = T.chest[0]+'%'; ch.style.top = T.chest[1]+'%';
     const opened = !!S.chests[s+'.'+u], ready = unitDone(s,u) && !opened;
     if (ready) ch.classList.add('ready');
-    ch.innerHTML = `<img src="assets/${opened?'chest_open':'chest_closed'}.png?v=36b5a4d5" alt="" onerror="this.replaceWith('${opened?'🎁':'📦'}')">`;
+    ch.innerHTML = `<img src="assets/${opened?'chest_open':'chest_closed'}.png?v=ae0b6bd2" alt="" onerror="this.replaceWith('${opened?'🎁':'📦'}')">`;
     ch.onclick = () => {
       if (opened) { toast('Already opened'); return; }
       if (!ready) { toast('Finish every lesson in this unit'); return; }
@@ -567,7 +567,7 @@ function endLesson(passed) {
   } else if (passed && L.practice) { xp += 10; coins = 1; rollDay(); S.today.lessons += 0; }
   S.xp += xp; S.coins += coins; save(); renderHud(); addMinutes(); tStart = Date.now();
   const img = passed ? 'cat_happy' : 'cat_sad';
-  body.innerHTML = `<div class="end fade"><img src="assets/${img}.png?v=36b5a4d5" alt="" onerror="this.replaceWith('${passed?'🎉':'😿'}')"><h2>${passed ? (perfect ? 'Perfect!' : 'Lesson complete!') : 'Out of hearts'}</h2><p class="small">${L.correct} of ${L.qs.length} correct${passed?'':' · try again, you were close'}</p><div class="gains"><div>+${xp} XP</div><div><img src="assets/coin.png?v=8af4edaa" alt="" onerror="this.replaceWith('🪙')">+${coins}</div>${perfect&&passed?'<div>⭐ star</div>':''}</div></div>`;
+  body.innerHTML = `<div class="end fade"><img src="assets/${img}.png?v=ae0b6bd2" alt="" onerror="this.replaceWith('${passed?'🎉':'😿'}')"><h2>${passed ? (perfect ? 'Perfect!' : 'Lesson complete!') : 'Out of hearts'}</h2><p class="small">${L.correct} of ${L.qs.length} correct${passed?'':' · try again, you were close'}</p><div class="gains"><div>+${xp} XP</div><div><img src="assets/coin.png?v=8af4edaa" alt="" onerror="this.replaceWith('🪙')">+${coins}</div>${perfect&&passed?'<div>⭐ star</div>':''}</div></div>`;
   $('#fb').className = 'fb'; $('#hintBtn').classList.add('hide');
   const check = $('#checkBtn'); check.textContent = passed ? 'Continue' : 'Retry'; check.disabled = false;
   check.onclick = () => { check.onclick = defaultCheck; if (passed) closeLesson(); else { const {s,u,l} = L; closeLesson(); startLesson(s,u,l); } };
@@ -612,7 +612,7 @@ const HOME = [
 // Drawing order, back to front; the cat stands between the rug/tall plant and the front furniture.
 const ROOM_Z = ['window','mapnotes','hangplant','shelf','poster','bookshelf','desk','nightstand','tallplant','rug','CAT','bed','backpack','cushion','rightplant','chest','cornerplant','books'];
 // Position of each item sprite in the room as % [left, top, width, height] (written by tools/key_items.py).
-const ROOM_POS = /*ROOMPOS*/{"rug":[26.7,75.42,42.78,21.67],"mapnotes":[10.23,0.83,14.55,38.33],"shelf":[56.82,6.67,13.64,28.75],"poster":[68.86,2.92,11.36,35.42],"window":[24.09,0.0,34.09,61.67],"bookshelf":[79.09,1.67,20.23,73.33],"desk":[51.82,32.08,30.91,50.42],"hangplant":[0.0,0.0,11.82,40.42],"nightstand":[24.49,38.85,11.82,35.73],"tallplant":[43.41,42.92,10.91,30.0],"bed":[0.0,37.5,26.14,57.08],"backpack":[71.36,57.5,11.82,28.33],"cushion":[77.5,68.75,16.14,23.75],"rightplant":[89.66,51.25,10.34,30.42],"chest":[87.73,75.42,12.27,24.58],"cornerplant":[0.0,66.67,12.73,33.33],"books":[8.18,80.42,12.05,19.58]}/*END*/;
+const ROOM_POS = /*ROOMPOS*/{"rug":[26.7,75.42,42.78,21.67],"mapnotes":[10.23,0.83,13.75,36.04],"shelf":[57.33,8.23,12.33,25.73],"poster":[70.28,3.33,8.75,28.75],"window":[25.0,0.1,32.67,58.65],"bookshelf":[80.0,3.44,18.41,69.79],"desk":[52.9,34.69,28.69,45.1],"hangplant":[0.8,0.0,9.77,37.6],"nightstand":[24.49,38.85,11.82,35.73],"tallplant":[44.38,46.56,8.24,25.62],"bed":[0.0,39.38,25.23,54.48],"backpack":[72.39,60.73,10.11,20.73],"cushion":[78.64,72.08,13.86,16.46],"rightplant":[90.68,53.44,9.32,26.67],"chest":[88.81,78.85,11.19,20.73],"cornerplant":[0.0,68.96,11.53,30.62],"books":[9.26,82.92,10.0,17.08]}/*END*/;
 const OUTFITS = [
   {id:'explorer', name:'Explorer', price:0}, {id:'sweater', name:'Cosy sweater', price:60}, {id:'italian', name:'Beret & stripes', price:80},
   {id:'rain', name:'Raincoat', price:90}, {id:'winter', name:'Ushanka', price:100}, {id:'tulip', name:'Tulip crown', price:110}, {id:'wizard', name:'Code wizard', price:150},
@@ -659,15 +659,15 @@ function renderCust() {
     <div class="icell soon">＋<br>More items soon!</div></div>`;
   } else if (custTab === 'wardrobe') {
     body = `<p class="small">Tap an outfit to wear it. New outfits are in the shop.</p><div class="igrid">${OUTFITS.map(o => { const own = S.outfits.owned.includes(o.id), on = S.outfits.worn === o.id;
-      return `<button class="icell ${own?'':'locked'} ${on?'on':''}" data-outfit="${o.id}" title="${o.name}"><img src="assets/${o.id==='explorer'?'cat_front.png':'cat_front_'+o.id+'.png'}?v=36b5a4d5" alt="${o.name}">${own ? '' : coinTag(o.price)}</button>`; }).join('')}</div>`;
+      return `<button class="icell ${own?'':'locked'} ${on?'on':''}" data-outfit="${o.id}" title="${o.name}"><img src="assets/${o.id==='explorer'?'cat_front.png':'cat_front_'+o.id+'.png'}?v=ae0b6bd2" alt="${o.name}">${own ? '' : coinTag(o.price)}</button>`; }).join('')}</div>`;
   } else {
-    const row = (kind, id, name, price, img, own) => `<div class="shoprow"><div class="th"><img src="assets/${img}?v=36b5a4d5" alt=""></div><div class="nm">${name}</div>${own ? '<span class="small">Owned</span>' : `<button class="btn ${S.coins>=price?'p':''}" data-buy="${kind}:${id}"><img src="assets/coin.png?v=8af4edaa" alt="">${price}</button>`}</div>`;
+    const row = (kind, id, name, price, img, own) => `<div class="shoprow"><div class="th"><img src="assets/${img}?v=ae0b6bd2" alt=""></div><div class="nm">${name}</div>${own ? '<span class="small">Owned</span>' : `<button class="btn ${S.coins>=price?'p':''}" data-buy="${kind}:${id}"><img src="assets/coin.png?v=8af4edaa" alt="">${price}</button>`}</div>`;
     body = `<div class="card"><h3>Outfits</h3>${OUTFITS.filter(o => o.price).map(o => row('outfit', o.id, o.name, o.price, 'cat_front_'+o.id+'.png', S.outfits.owned.includes(o.id))).join('')}</div>
     <div class="card"><h3>Furniture</h3>${HOME.filter(i => i.get==='shop').map(i => row('item', i.id, i.name, i.price, 'room_'+i.id+'.png', S.home.owned.includes(i.id))).join('')}</div>
     <p class="small">Earn coins by finishing lessons and opening treasure chests. You have ${S.coins} coins.</p>`;
   }
   $('#cust').innerHTML = `<div class="card chead"><h3>Customize ✦</h3><p class="small" style="margin:0">Decorate your home, style your cat, and visit the shop!</p>
-    <div class="ctabs">${tabs.map(([k,img,fb,label]) => `<button data-tab="${k}" class="${k===custTab?'on':''}"><img src="assets/${img}?v=36b5a4d5" alt="" onerror="this.replaceWith('${fb}')">${label}</button>`).join('')}</div>
+    <div class="ctabs">${tabs.map(([k,img,fb,label]) => `<button data-tab="${k}" class="${k===custTab?'on':''}"><img src="assets/${img}?v=ae0b6bd2" alt="" onerror="this.replaceWith('${fb}')">${label}</button>`).join('')}</div>
     <div class="room">${roomHTML()}</div>${body}</div>`;
   const c = $('#cust');
   c.querySelectorAll('[data-tab]').forEach(b => b.onclick = () => { custTab = b.dataset.tab; renderCust(); });
@@ -696,7 +696,7 @@ function renderCust() {
 function renderStats() {
   const acc = S.answered ? Math.round(S.correct/S.answered*100) : 0;
   const total = SUBJ.reduce((n,s)=>n+C[s].units.reduce((m,u)=>m+u.lessons.length,0),0), done = Object.keys(S.done).length;
-  const bars = SUBJ.map(s => { const n = C[s].units.reduce((m,u)=>m+u.lessons.length,0); const d = C[s].units.reduce((m,u,ui)=>m+u.lessons.filter((_,l)=>isDone(s,ui,l)).length,0); return `<div class="row" style="margin:6px 0"><img src="assets/${C[s].icon}?v=36b5a4d5" alt="" onerror="this.remove()"><span style="width:70px">${C[s].name}</span><div class="bar"><i style="width:${d/n*100}%"></i></div><span class="small">${d}/${n}</span></div>`; }).join('');
+  const bars = SUBJ.map(s => { const n = C[s].units.reduce((m,u)=>m+u.lessons.length,0); const d = C[s].units.reduce((m,u,ui)=>m+u.lessons.filter((_,l)=>isDone(s,ui,l)).length,0); return `<div class="row" style="margin:6px 0"><img src="assets/${C[s].icon}?v=ae0b6bd2" alt="" onerror="this.remove()"><span style="width:70px">${C[s].name}</span><div class="bar"><i style="width:${d/n*100}%"></i></div><span class="small">${d}/${n}</span></div>`; }).join('');
   const log = S.log.slice(0,15).map(e => `<div class="row small" style="padding:4px 0;border-bottom:1px solid #ffffff14"><span style="width:82px">${e.d}</span><span style="flex:1">${C[e.s].name} · ${C[e.s].units[e.u].lessons[e.l].title}</span><span>${e.c}/${e.n}</span></div>`).join('') || '<p class="small">No lessons yet. Off you go!</p>';
   $('#stats').innerHTML = `<div class="grid2" style="margin-bottom:10px"><div class="stat"><b>${S.xp}</b><span>total XP</span></div><div class="stat"><b>${S.streak}</b><span>day streak</span></div><div class="stat"><b>${acc}%</b><span>accuracy</span></div><div class="stat"><b>${done}/${total}</b><span>lessons</span></div></div>
   <div class="card"><h3>Progress</h3>${bars}</div><div class="card"><h3>Journal</h3>${log}</div>`;
